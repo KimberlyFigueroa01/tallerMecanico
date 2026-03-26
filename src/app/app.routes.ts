@@ -15,4 +15,20 @@ export const routes: Routes = [
 		loadChildren: () =>
 			import('./clientes/clientes-module').then((m) => m.ClientesModule),
 	},
+	{
+		path: 'inventario',
+		loadChildren: () =>
+			import('./inventario/inventario-module').then((m) => m.InventarioModule),
+	},
+	{
+		path: 'pagos',
+		loadChildren: () =>
+			import('./pagos/pagos-module').then((m) => m.PagosModule),
+	},
+	{
+		path: 'reportes',
+		loadChildren: () =>
+			import('./reportes/reportes-module').then((m) => m.ReportesModule),
+	},
+	
 ];
