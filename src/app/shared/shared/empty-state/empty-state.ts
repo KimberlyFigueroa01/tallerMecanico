@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-empty-state',
-  imports: [],
-  templateUrl: './empty-state.html',
-  styleUrl: './empty-state.css',
+  imports: [CommonModule],
+  template: '<p>empty-state works!</p>',
+  styles: [],
 })
 export class EmptyState {}
