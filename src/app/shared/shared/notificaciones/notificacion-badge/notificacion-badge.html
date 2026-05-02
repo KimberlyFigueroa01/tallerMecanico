@@ -1,1 +1,6 @@
-<p>notificacion-badge works!</p>
+<div class="notification" aria-label="Notificaciones">
+	<span class="notification-icon" aria-hidden="true">N</span>
+	@if (count() > 0) {
+		<span class="notification-count">{{ count() }}</span>
+	}
+</div>

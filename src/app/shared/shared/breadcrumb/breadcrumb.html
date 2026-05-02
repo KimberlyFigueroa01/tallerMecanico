@@ -1,1 +1,7 @@
-<p>breadcrumb works!</p>
+<nav class="breadcrumb" aria-label="Breadcrumb">
+	<a class="breadcrumb-link" routerLink="/dashboard">Inicio</a>
+	@for (crumb of crumbs(); track crumb.url) {
+		<span class="breadcrumb-sep">/</span>
+		<a class="breadcrumb-link" [routerLink]="crumb.url">{{ crumb.label }}</a>
+	}
+</nav>

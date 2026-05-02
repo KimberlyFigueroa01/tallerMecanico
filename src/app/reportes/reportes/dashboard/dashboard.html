@@ -1,1 +1,56 @@
-<p>dashboard works!</p>
+<section class="dashboard">
+	<header>
+		<h1>Dashboard</h1>
+		<p>Resumen operativo del taller.</p>
+	</header>
+
+	<div class="kpis">
+		<div class="kpi">
+			<span>Ordenes activas</span>
+			<strong>{{ data()?.ordenesActivas ?? 0 }}</strong>
+		</div>
+		<div class="kpi">
+			<span>Ingresos del mes</span>
+			<strong>${{ data()?.ingresosMes ?? 0 }}</strong>
+		</div>
+		<div class="kpi">
+			<span>Vehiculos en taller</span>
+			<strong>{{ data()?.vehiculosEnTaller ?? 0 }}</strong>
+		</div>
+		<div class="kpi">
+			<span>Stock bajo</span>
+			<strong>{{ data()?.stockBajo ?? 0 }}</strong>
+		</div>
+	</div>
+
+	<div class="charts">
+		<div class="chart-card">
+			<h3>Ingresos por mes</h3>
+			<div class="chart-placeholder">Grafica de barras</div>
+		</div>
+		<div class="chart-card">
+			<h3>Ordenes por estado</h3>
+			<div class="chart-placeholder">Grafica dona</div>
+		</div>
+	</div>
+
+	<div class="recent">
+		<h3>Ordenes recientes</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Orden</th>
+					<th>Cliente</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>OT-1001</td>
+					<td>Maria Lopez</td>
+					<td>Abierta</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>

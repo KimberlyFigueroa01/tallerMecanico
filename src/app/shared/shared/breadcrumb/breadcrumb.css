@@ -1,0 +1,20 @@
+.breadcrumb {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	color: #6b7280;
+}
+
+.breadcrumb-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.breadcrumb-link:hover {
+	color: #111827;
+}
+
+.breadcrumb-sep {
+	color: #d1d5db;
+}

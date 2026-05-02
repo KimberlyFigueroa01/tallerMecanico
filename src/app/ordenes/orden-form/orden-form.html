@@ -1,1 +1,31 @@
-<p>orden-form works!</p>
+<section class="orden-form">
+	<header>
+		<h1>Nueva orden</h1>
+		<p>Completa los datos basicos para registrar la orden.</p>
+	</header>
+
+	<form [formGroup]="form" (ngSubmit)="submit()">
+		<div class="form-grid">
+			<div class="field">
+				<label for="cliente">Cliente</label>
+				<input id="cliente" formControlName="cliente" placeholder="Nombre del cliente">
+			</div>
+			<div class="field">
+				<label for="vehiculo">Vehiculo</label>
+				<input id="vehiculo" formControlName="vehiculo" placeholder="Marca y modelo">
+			</div>
+			<div class="field">
+				<label for="tecnico">Tecnico</label>
+				<input id="tecnico" formControlName="tecnico" placeholder="Asignado">
+			</div>
+			<div class="field">
+				<label for="tipo">Tipo</label>
+				<input id="tipo" formControlName="tipo" placeholder="Mecanica, electrica, etc.">
+			</div>
+		</div>
+
+		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+			{{ isSubmitting() ? 'Guardando...' : 'Guardar orden' }}
+		</button>
+	</form>
+</section>

@@ -1,1 +1,16 @@
-<p>confirm-dialog works!</p>
+@if (open()) {
+	<div class="dialog-backdrop" role="dialog" aria-modal="true">
+		<div class="dialog">
+			<h3>{{ title() }}</h3>
+			<p>{{ message() }}</p>
+			<div class="dialog-actions">
+				<button type="button" class="btn-cancel" (click)="cancel.emit()">
+					{{ cancelLabel() }}
+				</button>
+				<button type="button" class="btn-confirm" (click)="confirm.emit()">
+					{{ confirmLabel() }}
+				</button>
+			</div>
+		</div>
+	</div>
+}

@@ -1,1 +1,25 @@
-<p>orden-diagnostico works!</p>
+<section class="diagnostico">
+	<header>
+		<h1>Diagnostico</h1>
+		<p>Registra el diagnostico tecnico del vehiculo.</p>
+	</header>
+
+	<form [formGroup]="form" (ngSubmit)="submit()">
+		<div class="field">
+			<label for="sintomas">Sintomas</label>
+			<textarea id="sintomas" rows="3" formControlName="sintomas"></textarea>
+		</div>
+		<div class="field">
+			<label for="diagnostico">Diagnostico</label>
+			<textarea id="diagnostico" rows="4" formControlName="diagnostico"></textarea>
+		</div>
+		<div class="field">
+			<label for="recomendaciones">Recomendaciones</label>
+			<textarea id="recomendaciones" rows="3" formControlName="recomendaciones"></textarea>
+		</div>
+
+		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+			{{ isSubmitting() ? 'Guardando...' : 'Guardar diagnostico' }}
+		</button>
+	</form>
+</section>

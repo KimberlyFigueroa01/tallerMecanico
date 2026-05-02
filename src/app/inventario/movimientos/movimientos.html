@@ -1,1 +1,23 @@
-<p>movimientos works!</p>
+<section class="movimientos">
+	<h1>Movimientos</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Fecha</th>
+				<th>Usuario</th>
+				<th>Cantidad</th>
+				<th>Referencia</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (movimiento of movimientos; track movimiento.fecha) {
+				<tr>
+					<td>{{ movimiento.fecha }}</td>
+					<td>{{ movimiento.usuario }}</td>
+					<td>{{ movimiento.cantidad }}</td>
+					<td>{{ movimiento.referencia }}</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</section>

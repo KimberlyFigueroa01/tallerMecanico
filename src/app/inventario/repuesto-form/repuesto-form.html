@@ -1,1 +1,35 @@
-<p>repuesto-form works!</p>
+<section class="repuesto-form">
+	<header>
+		<h1>Repuesto</h1>
+		<p>Registra un nuevo repuesto.</p>
+	</header>
+
+	<form [formGroup]="form" (ngSubmit)="submit()">
+		<div class="form-grid">
+			<div class="field">
+				<label for="nombre">Nombre</label>
+				<input id="nombre" formControlName="nombre">
+			</div>
+			<div class="field">
+				<label for="sku">SKU</label>
+				<input id="sku" formControlName="sku">
+			</div>
+			<div class="field">
+				<label for="categoria">Categoria</label>
+				<input id="categoria" formControlName="categoria">
+			</div>
+			<div class="field">
+				<label for="stock">Stock</label>
+				<input id="stock" type="number" formControlName="stock">
+			</div>
+			<div class="field">
+				<label for="precio">Precio</label>
+				<input id="precio" type="number" formControlName="precio">
+			</div>
+		</div>
+
+		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+			{{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
+		</button>
+	</form>
+</section>

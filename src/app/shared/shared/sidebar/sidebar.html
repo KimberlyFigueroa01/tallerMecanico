@@ -1,1 +1,15 @@
-<p>sidebar works!</p>
+<aside class="sidebar">
+	<nav class="menu" aria-label="Menu principal">
+		@for (item of visibleItems(); track item.route) {
+			<a
+				class="menu-item"
+				[routerLink]="item.route"
+				routerLinkActive="active"
+				[routerLinkActiveOptions]="{ exact: true }"
+			>
+				<span class="menu-icon" aria-hidden="true">{{ item.icon }}</span>
+				<span class="menu-label">{{ item.label }}</span>
+			</a>
+		}
+	</nav>
+</aside>

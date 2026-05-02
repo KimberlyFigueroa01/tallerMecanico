@@ -1,0 +1,47 @@
+.diagnostico {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.diagnostico h1 {
+	margin: 0;
+	font-size: 20px;
+}
+
+.diagnostico p {
+	margin: 4px 0 0;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.field label {
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #6b7280;
+}
+
+.field textarea {
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 0.5px solid var(--border-color);
+	resize: vertical;
+}
+
+.primary-btn {
+	margin-top: 12px;
+	padding: 10px 14px;
+	border-radius: 8px;
+	border: none;
+	background: var(--primary-color);
+	color: var(--secondary-color);
+	font-weight: 600;
+	cursor: pointer;
+}

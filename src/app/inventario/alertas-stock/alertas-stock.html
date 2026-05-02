@@ -1,1 +1,13 @@
-<p>alertas-stock works!</p>
+@if (alertas().length > 0) {
+	<div class="alerta">
+		<strong>Repuestos bajo minimo</strong>
+		<ul>
+			@for (item of alertas(); track item.id) {
+				<li>
+					<span>{{ item.nombre }} ({{ item.stock }})</span>
+					<button>Reordenar</button>
+				</li>
+			}
+		</ul>
+	</div>
+}

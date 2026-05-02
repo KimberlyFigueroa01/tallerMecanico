@@ -1,0 +1,142 @@
+.ordenes-page {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.ordenes-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ordenes-header h1 {
+	margin: 0;
+	font-size: 20px;
+}
+
+.ordenes-header p {
+	margin: 4px 0 0;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.primary-btn {
+	padding: 10px 14px;
+	border-radius: 8px;
+	border: none;
+	background: var(--primary-color);
+	color: var(--secondary-color);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.resumen {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.resumen-card {
+	border: 0.5px solid var(--border-color);
+	border-radius: 12px;
+	padding: 14px;
+	background: #ffffff;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.resumen-card span {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #6b7280;
+}
+
+.resumen-card strong {
+	font-size: 20px;
+	color: #111827;
+}
+
+.filters {
+	display: grid;
+	grid-template-columns: 160px 160px 1fr;
+	gap: 12px;
+}
+
+.filters select,
+.filters input {
+	border: 0.5px solid var(--border-color);
+	border-radius: 8px;
+	padding: 8px 10px;
+	font-size: 13px;
+}
+
+.ordenes-table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 0.5px solid var(--border-color);
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.ordenes-table th {
+	text-align: left;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #6b7280;
+	background: #f9fafb;
+	border-bottom: 0.5px solid var(--border-color);
+	padding: 10px 12px;
+}
+
+.ordenes-table td {
+	padding: 12px;
+	border-bottom: 0.5px solid var(--border-color);
+	font-size: 14px;
+	color: #111827;
+}
+
+.ordenes-table tr:hover {
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.stacked {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.stacked .primary {
+	font-weight: 600;
+}
+
+.stacked .secondary {
+	font-size: 12px;
+	color: #6b7280;
+}
+
+.skeleton-table {
+	border: 0.5px solid var(--border-color);
+	border-radius: 12px;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.skeleton-row {
+	height: 22px;
+	border-radius: 6px;
+	background: linear-gradient(90deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
+	background-size: 200% 100%;
+	animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}

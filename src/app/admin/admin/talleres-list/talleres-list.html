@@ -1,1 +1,33 @@
-<p>talleres-list works!</p>
+<section class="talleres">
+	<header>
+		<h1>Talleres</h1>
+		<p>Gestion de tenants y planes.</p>
+	</header>
+
+	@if (isLoading()) {
+		<div class="skeleton-row"></div>
+	} @else {
+		<table>
+			<thead>
+				<tr>
+					<th>Taller</th>
+					<th>Dominio</th>
+					<th>Plan</th>
+					<th>Usuarios</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (taller of talleres(); track taller.id) {
+					<tr (click)="open(taller)" class="row-click">
+						<td>{{ taller.nombre }}</td>
+						<td>{{ taller.dominio }}</td>
+						<td>{{ taller.plan }}</td>
+						<td>{{ taller.usuarios }}</td>
+						<td>{{ taller.estado }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</section>

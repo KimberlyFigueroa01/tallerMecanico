@@ -1,1 +1,25 @@
-<p>pago-form works!</p>
+<section class="pago-form">
+	<header>
+		<h1>Registrar pago</h1>
+		<p>Selecciona metodo y confirma el monto.</p>
+	</header>
+
+	<div class="metodos">
+		<button class="metodo" [class.active]="metodo() === 'efectivo'" (click)="setMetodo('efectivo')">Efectivo</button>
+		<button class="metodo" [class.active]="metodo() === 'tarjeta'" (click)="setMetodo('tarjeta')">Tarjeta</button>
+		<button class="metodo" [class.active]="metodo() === 'transferencia'" (click)="setMetodo('transferencia')">Transferencia</button>
+	</div>
+
+	<form [formGroup]="form" (ngSubmit)="submit()">
+		<div class="field">
+			<label for="monto">Monto</label>
+			<input id="monto" type="number" formControlName="monto">
+		</div>
+		<div class="field">
+			<label for="referencia">Referencia</label>
+			<input id="referencia" formControlName="referencia">
+		</div>
+
+		<button class="primary-btn" type="submit">Guardar pago</button>
+	</form>
+</section>

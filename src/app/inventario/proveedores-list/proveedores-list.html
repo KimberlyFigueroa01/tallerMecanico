@@ -1,1 +1,8 @@
-<p>proveedores-list works!</p>
+<section class="proveedores">
+	<h1>Proveedores</h1>
+	<ul>
+		@for (proveedor of proveedores; track proveedor) {
+			<li>{{ proveedor }}</li>
+		}
+	</ul>
+</section>

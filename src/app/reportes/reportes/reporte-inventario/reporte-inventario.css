@@ -1,0 +1,13 @@
+.reporte h1 {
+	margin: 0 0 12px;
+	font-size: 20px;
+}
+
+.chart-placeholder {
+	height: 220px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+	display: grid;
+	place-items: center;
+	color: #6b7280;
+}

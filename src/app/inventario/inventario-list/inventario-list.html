@@ -1,1 +1,47 @@
-<p>inventario-list works!</p>
+<section class="inventario-page">
+	<header class="inventario-header">
+		<div>
+			<h1>Inventario</h1>
+			<p>Control de repuestos y stock.</p>
+		</div>
+		<button class="primary-btn">Nuevo repuesto</button>
+	</header>
+
+	<app-alertas-stock></app-alertas-stock>
+
+	@if (isLoading()) {
+		<div class="skeleton-row"></div>
+	} @else {
+		<table class="inventario-table">
+			<thead>
+				<tr>
+					<th>Repuesto</th>
+					<th>SKU</th>
+					<th>Categoria</th>
+					<th>Stock</th>
+					<th>Precio</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (repuesto of repuestos(); track repuesto.id) {
+					<tr>
+						<td>{{ repuesto.nombre }}</td>
+						<td>{{ repuesto.sku }}</td>
+						<td>{{ repuesto.categoria }}</td>
+						<td>
+							<span
+								class="stock-pill"
+								[class.stock-ok]="stockClass(repuesto) === 'stock-ok'"
+								[class.stock-warning]="stockClass(repuesto) === 'stock-warning'"
+								[class.stock-low]="stockClass(repuesto) === 'stock-low'"
+							>
+								{{ repuesto.stock }}
+							</span>
+						</td>
+						<td>${{ repuesto.precio }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</section>

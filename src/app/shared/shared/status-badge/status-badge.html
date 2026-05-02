@@ -1,1 +1,10 @@
-<p>status-badge works!</p>
+<span
+	class="status-badge"
+	[class.status-open]="statusClass() === 'open'"
+	[class.status-progress]="statusClass() === 'progress'"
+	[class.status-ready]="statusClass() === 'ready'"
+	[class.status-closed]="statusClass() === 'closed'"
+	[class.status-alert]="statusClass() === 'alert'"
+>
+	{{ status() || 'Sin estado' }}
+</span>

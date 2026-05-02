@@ -1,0 +1,38 @@
+.alerta {
+	border: 0.5px solid rgba(239, 68, 68, 0.4);
+	background: rgba(239, 68, 68, 0.08);
+	border-radius: 12px;
+	padding: 12px 16px;
+}
+
+.alerta strong {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--danger);
+	font-size: 13px;
+}
+
+.alerta ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.alerta li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 13px;
+}
+
+.alerta button {
+	padding: 4px 8px;
+	border-radius: 6px;
+	border: 0.5px solid var(--danger);
+	background: transparent;
+	color: var(--danger);
+	cursor: pointer;
+}

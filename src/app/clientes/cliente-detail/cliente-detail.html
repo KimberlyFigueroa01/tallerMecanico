@@ -1,1 +1,23 @@
-<p>cliente-detail works!</p>
+@if (cliente()) {
+	<section class="cliente-detail">
+		<header>
+			<h1>{{ cliente()?.nombre }}</h1>
+			<p>{{ cliente()?.email }} · {{ cliente()?.telefono }}</p>
+		</header>
+
+		<div class="tabs">
+			@for (tab of tabs; track tab) {
+				<button class="tab" [class.active]="activeTab() === tab" (click)="setTab(tab)">
+					{{ tab }}
+				</button>
+			}
+		</div>
+
+		<div class="tab-panel">
+			<h3>{{ activeTab() }}</h3>
+			<p class="muted">Contenido de {{ activeTab() }} pendiente.</p>
+		</div>
+	</section>
+} @else {
+	<p class="muted">Cargando cliente...</p>
+}

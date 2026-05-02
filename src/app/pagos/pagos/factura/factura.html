@@ -1,1 +1,40 @@
-<p>factura works!</p>
+<section class="factura">
+	<header class="factura-header">
+		<div>
+			<h1>{{ taller }}</h1>
+			<p>Factura de servicios</p>
+		</div>
+		<button class="primary-btn" (click)="print()">Imprimir</button>
+	</header>
+
+	<div class="factura-body">
+		<div class="factura-section">
+			<h3>Cliente</h3>
+			<p>Nombre del cliente</p>
+		</div>
+		<div class="factura-section">
+			<h3>Detalle</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Servicio</th>
+						<th>Cant</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Servicio ejemplo</td>
+						<td>1</td>
+						<td>$120</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="factura-totals">
+			<span>Subtotal: $120</span>
+			<span>IVA: $22.8</span>
+			<strong>Total: $142.8</strong>
+		</div>
+	</div>
+</section>

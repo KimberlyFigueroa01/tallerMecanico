@@ -1,1 +1,23 @@
-<p>taller-detail works!</p>
+@if (taller()) {
+	<section class="taller-detail">
+		<h1>{{ taller()?.nombre }}</h1>
+		<div class="grid">
+			<div>
+				<span>Dominio</span>
+				<strong>{{ taller()?.dominio }}</strong>
+			</div>
+			<div>
+				<span>Plan</span>
+				<strong>{{ taller()?.plan }}</strong>
+			</div>
+			<div>
+				<span>Usuarios</span>
+				<strong>{{ taller()?.usuarios }}</strong>
+			</div>
+			<div>
+				<span>Estado</span>
+				<strong>{{ taller()?.estado }}</strong>
+			</div>
+		</div>
+	</section>
+}

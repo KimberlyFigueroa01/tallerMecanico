@@ -1,21 +1,31 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = localStorage.getItem('token');
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const platformId = inject(PLATFORM_ID);
+  const router = inject(Router);
 
-    if (token) {
-      const cloned = req.clone({
+  const token = isPlatformBrowser(platformId)
+    ? localStorage.getItem('ag_token')
+    : null;
+
+  const authRequest = token
+    ? req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
-      });
-      return next.handle(cloned);
-    }
+      })
+    : req;
 
-    return next.handle(req);
-  }
-}
+  return next(authRequest).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        router.navigateByUrl('/auth');
+      }
+      return throwError(() => error);
+    })
+  );
+};

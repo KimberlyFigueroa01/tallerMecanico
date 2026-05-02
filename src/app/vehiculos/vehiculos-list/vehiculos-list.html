@@ -1,1 +1,34 @@
-<p>vehiculos-list works!</p>
+<section class="vehiculos-page">
+	<header class="vehiculos-header">
+		<div>
+			<h1>Vehiculos</h1>
+			<p>Listado de vehiculos registrados.</p>
+		</div>
+		<button class="primary-btn">Nuevo vehiculo</button>
+	</header>
+
+	@if (isLoading()) {
+		<div class="skeleton-row"></div>
+	} @else {
+		<table class="vehiculos-table">
+			<thead>
+				<tr>
+					<th>Vehiculo</th>
+					<th>Placa</th>
+					<th>Cliente</th>
+					<th>Km</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (vehiculo of vehiculos(); track vehiculo.id) {
+					<tr (click)="open(vehiculo)" class="row-click">
+						<td>{{ vehiculo.marca }} {{ vehiculo.modelo }} {{ vehiculo.ano }}</td>
+						<td>{{ vehiculo.placa }}</td>
+						<td>{{ vehiculo.cliente }}</td>
+						<td>{{ vehiculo.km }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</section>

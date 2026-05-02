@@ -1,1 +1,50 @@
-<p>clientes-list works!</p>
+<section class="clientes-page">
+	<header class="clientes-header">
+		<div>
+			<h1>Clientes</h1>
+			<p>Gestiona informacion de clientes y vehiculos.</p>
+		</div>
+		<button class="primary-btn">Nuevo cliente</button>
+	</header>
+
+	<div class="filters">
+		<input type="search" placeholder="Buscar por nombre, RUT o telefono" (input)="load($any($event.target).value)">
+	</div>
+
+	@if (isLoading()) {
+		<div class="skeleton-row"></div>
+	} @else {
+		<table class="clientes-table">
+			<thead>
+				<tr>
+					<th>Cliente</th>
+					<th>Contacto</th>
+					<th>Vehiculos</th>
+					<th>Ultima visita</th>
+					<th>Estado orden</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (cliente of clientes(); track cliente.id) {
+					<tr (click)="open(cliente)" class="row-click">
+						<td>
+							<div class="stacked">
+								<span class="primary">{{ cliente.nombre }}</span>
+								<span class="secondary">{{ cliente.rut }}</span>
+							</div>
+						</td>
+						<td>
+							<div class="stacked">
+								<span class="primary">{{ cliente.email }}</span>
+								<span class="secondary">{{ cliente.telefono }}</span>
+							</div>
+						</td>
+						<td>{{ cliente.vehiculos }}</td>
+						<td>{{ cliente.ultimaVisita }}</td>
+						<td><app-status-badge [status]="cliente.estadoOrden"></app-status-badge></td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</section>

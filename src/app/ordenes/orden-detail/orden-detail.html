@@ -1,1 +1,85 @@
-<p>orden-detail works!</p>
+@if (order()) {
+	<section class="orden-detail">
+		<header class="orden-header">
+			<div class="orden-title">
+				<h1>{{ order()?.id }}</h1>
+				<span>{{ order()?.fecha }}</span>
+			</div>
+			<div class="orden-actions">
+				<app-status-badge [status]="order()?.estado ?? ''"></app-status-badge>
+				<button class="header-btn">Editar</button>
+			</div>
+		</header>
+
+		<div class="orden-body">
+			<div class="panel-left">
+				<div class="panel-section">
+					<h3>Cliente</h3>
+					<p>{{ order()?.cliente }}</p>
+				</div>
+				<div class="panel-section">
+					<h3>Tipo de falla</h3>
+					<div class="chip-group">
+						<button class="chip">Mecanica</button>
+						<button class="chip">Electrica</button>
+						<button class="chip">Carroceria</button>
+					</div>
+				</div>
+				<div class="panel-section">
+					<h3>Descripcion</h3>
+					<p class="muted">Pendiente de diagnostico detallado.</p>
+				</div>
+				<div class="panel-section">
+					<h3>Servicios</h3>
+					<table class="lineas">
+						<thead>
+							<tr>
+								<th>Cant</th>
+								<th>Precio</th>
+								<th>Desc</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							@for (linea of order()?.lineas ?? []; track linea.id) {
+								<tr>
+									<td>{{ linea.cantidad }}</td>
+									<td>${{ linea.precio }}</td>
+									<td>${{ linea.descuento }}</td>
+									<td>${{ linea.total }}</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+					<button class="ghost-btn">+ Agregar producto</button>
+				</div>
+			</div>
+
+			<aside class="panel-right">
+				<div class="tabs">
+					@for (tab of tabs; track tab) {
+						<button class="tab" [class.active]="activeTab() === tab" (click)="setTab(tab)">
+							{{ tab }}
+						</button>
+					}
+				</div>
+				<div class="tab-content">
+					<h4>{{ activeTab() }}</h4>
+					<p class="muted">Informacion contextual de {{ activeTab() }}.</p>
+				</div>
+			</aside>
+		</div>
+
+		<footer class="totals-bar">
+			<div class="totals">
+				<span>Descuento: ${{ order()?.descuento }}</span>
+				<span>Subtotal: ${{ order()?.subtotal }}</span>
+				<span>IVA: ${{ order()?.iva }}</span>
+				<strong>Total: ${{ totalLabel() }}</strong>
+			</div>
+			<button class="primary-btn">Imprimir orden</button>
+		</footer>
+	</section>
+} @else {
+	<div class="loading">Cargando orden...</div>
+}

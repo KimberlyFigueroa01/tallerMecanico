@@ -1,3 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles and theme variables */
 
-@import 'tailwindcss';
+:root {
+	--primary-color: #1b5e20;
+	--secondary-color: #ffffff;
+	--background-color: #ffffff;
+	--header-bg: #1c1c1e;
+	--header-text: #ffffff;
+	--border-color: rgba(0, 0, 0, 0.1);
+	--success: #10b981;
+	--warning: #f59e0b;
+	--danger: #ef4444;
+	--info: #3b82f6;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+	background: var(--background-color);
+	color: #111827;
+	font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}

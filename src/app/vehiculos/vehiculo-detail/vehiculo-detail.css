@@ -1,0 +1,51 @@
+.vehiculo-detail {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.vehiculo-detail h1 {
+	margin: 0;
+	font-size: 20px;
+}
+
+.vehiculo-detail p {
+	margin: 4px 0 0;
+	color: #6b7280;
+	font-size: 13px;
+}
+
+.ficha {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.ficha div {
+	border: 0.5px solid var(--border-color);
+	border-radius: 12px;
+	padding: 12px;
+	background: #ffffff;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.ficha span {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #6b7280;
+}
+
+.tab-panel {
+	border: 0.5px solid var(--border-color);
+	border-radius: 12px;
+	padding: 16px;
+	background: #ffffff;
+}
+
+.muted {
+	color: #6b7280;
+	font-size: 13px;
+}

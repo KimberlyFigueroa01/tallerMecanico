@@ -1,1 +1,86 @@
-<p>ordenes-list works!</p>
+<section class="ordenes-page">
+	<header class="ordenes-header">
+		<div>
+			<h1>Ordenes</h1>
+			<p>Resumen operativo del taller</p>
+		</div>
+		<button class="primary-btn">Nueva orden</button>
+	</header>
+
+	<div class="resumen">
+		<div class="resumen-card">
+			<span>Abiertas</span>
+			<strong>{{ resumen().abiertas }}</strong>
+		</div>
+		<div class="resumen-card">
+			<span>En progreso</span>
+			<strong>{{ resumen().progreso }}</strong>
+		</div>
+		<div class="resumen-card">
+			<span>Listas</span>
+			<strong>{{ resumen().listas }}</strong>
+		</div>
+		<div class="resumen-card">
+			<span>Cerradas</span>
+			<strong>{{ resumen().cerradas }}</strong>
+		</div>
+	</div>
+
+	<div class="filters">
+		<select (change)="updateEstado($any($event.target).value)">
+			<option value="">Estado</option>
+			<option value="Abierta">Abierta</option>
+			<option value="En progreso">En progreso</option>
+			<option value="Lista">Lista</option>
+			<option value="Cerrada">Cerrada</option>
+		</select>
+		<select (change)="updateTecnico($any($event.target).value)">
+			<option value="">Tecnico</option>
+			<option value="Carlos Ruiz">Carlos Ruiz</option>
+			<option value="Laura Perez">Laura Perez</option>
+		</select>
+		<input
+			type="search"
+			placeholder="Buscar orden, cliente o vehiculo"
+			(input)="updateSearch($any($event.target).value)"
+		>
+	</div>
+
+	@if (isLoading()) {
+		<div class="skeleton-table">
+			<div class="skeleton-row"></div>
+			<div class="skeleton-row"></div>
+			<div class="skeleton-row"></div>
+		</div>
+	} @else {
+		<table class="ordenes-table">
+			<thead>
+				<tr>
+					<th>N°</th>
+					<th>Cliente / Vehiculo</th>
+					<th>Tecnico</th>
+					<th>Tipo</th>
+					<th>Estado</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (order of orders(); track order.id) {
+					<tr>
+						<td>{{ order.id }}</td>
+						<td>
+							<div class="stacked">
+								<span class="primary">{{ order.cliente }}</span>
+								<span class="secondary">{{ order.vehiculo }}</span>
+							</div>
+						</td>
+						<td>{{ order.tecnico }}</td>
+						<td>{{ order.tipo }}</td>
+						<td><app-status-badge [status]="order.estado"></app-status-badge></td>
+						<td>${{ order.total }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</section>

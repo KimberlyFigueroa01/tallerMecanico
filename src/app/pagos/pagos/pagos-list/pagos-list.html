@@ -1,1 +1,48 @@
-<p>pagos-list works!</p>
+<section class="pagos-page">
+	<header>
+		<h1>Pagos</h1>
+		<p>Control de ingresos y pagos pendientes.</p>
+	</header>
+
+	<div class="kpis">
+		<div class="kpi">
+			<span>Ingresos del mes</span>
+			<strong>$15.200</strong>
+		</div>
+		<div class="kpi">
+			<span>Ordenes pagadas</span>
+			<strong>18</strong>
+		</div>
+		<div class="kpi">
+			<span>Pagos pendientes</span>
+			<strong>5</strong>
+		</div>
+	</div>
+
+	@if (isLoading()) {
+		<div class="skeleton-row"></div>
+	} @else {
+		<table class="pagos-table">
+			<thead>
+				<tr>
+					<th>Pago</th>
+					<th>Orden</th>
+					<th>Metodo</th>
+					<th>Monto</th>
+					<th>Fecha</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (pago of pagos(); track pago.id) {
+					<tr>
+						<td>{{ pago.id }}</td>
+						<td>{{ pago.ordenId }}</td>
+						<td>{{ pago.metodo }}</td>
+						<td>${{ pago.monto }}</td>
+						<td>{{ pago.fecha }}</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</section>

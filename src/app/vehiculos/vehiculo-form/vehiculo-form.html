@@ -1,1 +1,31 @@
-<p>vehiculo-form works!</p>
+<section class="vehiculo-form">
+	<header>
+		<h1>Vehiculo</h1>
+		<p>Datos basicos del vehiculo.</p>
+	</header>
+
+	<form [formGroup]="form" (ngSubmit)="submit()">
+		<div class="form-grid">
+			<div class="field">
+				<label for="marca">Marca</label>
+				<input id="marca" formControlName="marca">
+			</div>
+			<div class="field">
+				<label for="modelo">Modelo</label>
+				<input id="modelo" formControlName="modelo">
+			</div>
+			<div class="field">
+				<label for="ano">Ano</label>
+				<input id="ano" type="number" formControlName="ano">
+			</div>
+			<div class="field">
+				<label for="placa">Placa</label>
+				<input id="placa" formControlName="placa">
+			</div>
+		</div>
+
+		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+			{{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
+		</button>
+	</form>
+</section>

@@ -1,1 +1,34 @@
-<p>vehiculo-detail works!</p>
+@if (vehiculo()) {
+	<section class="vehiculo-detail">
+		<header>
+			<h1>{{ vehiculo()?.marca }} {{ vehiculo()?.modelo }}</h1>
+			<p>{{ vehiculo()?.placa }} · {{ vehiculo()?.cliente }}</p>
+		</header>
+
+		<div class="ficha">
+			<div>
+				<span>VIN</span>
+				<strong>{{ vehiculo()?.vin }}</strong>
+			</div>
+			<div>
+				<span>Color</span>
+				<strong>{{ vehiculo()?.color }}</strong>
+			</div>
+			<div>
+				<span>KM</span>
+				<strong>{{ vehiculo()?.km }}</strong>
+			</div>
+			<div>
+				<span>Ano</span>
+				<strong>{{ vehiculo()?.ano }}</strong>
+			</div>
+		</div>
+
+		<div class="tab-panel">
+			<h3>Historial</h3>
+			<p class="muted">Ordenes asociadas al vehiculo.</p>
+		</div>
+	</section>
+} @else {
+	<p class="muted">Cargando vehiculo...</p>
+}
