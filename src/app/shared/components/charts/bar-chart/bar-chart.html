@@ -1,0 +1,20 @@
+<div class="space-y-2">
+	<svg viewBox="0 0 100 60" class="chart-svg">
+		<line x1="6" y1="52" x2="94" y2="52" stroke="#e2e8f0" stroke-width="0.6"></line>
+		@for (bar of bars(); track bar.label) {
+			<rect
+				[attr.x]="bar.x"
+				[attr.y]="bar.y"
+				[attr.width]="bar.width"
+				[attr.height]="bar.height"
+				[attr.fill]="bar.color"
+				rx="1.5"
+			></rect>
+		}
+	</svg>
+	<div class="grid gap-2 text-[11px] text-slate-500" [style.gridTemplateColumns]="gridTemplate()">
+		@for (bar of bars(); track bar.label) {
+			<span class="text-center">{{ bar.label }}</span>
+		}
+	</div>
+</div>

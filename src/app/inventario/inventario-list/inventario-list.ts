@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { InventarioService } from '../services/inventario.service';
 import { Repuesto } from '../models/repuesto.model';
@@ -6,7 +7,7 @@ import { AlertasStock } from '../alertas-stock/alertas-stock';
 
 @Component({
   selector: 'app-inventario-list',
-  imports: [AlertasStock],
+  imports: [AlertasStock, RouterLink],
   templateUrl: './inventario-list.html',
   styleUrl: './inventario-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -29,10 +30,10 @@ export class InventarioList {
   }
 
   stockClass(repuesto: Repuesto): string {
-    if (repuesto.stock < repuesto.minimo) {
+    if (repuesto.stock < repuesto.stockMin) {
       return 'stock-low';
     }
-    if (repuesto.stock <= repuesto.minimo + 2) {
+    if (repuesto.stock <= repuesto.stockMin + 2) {
       return 'stock-warning';
     }
     return 'stock-ok';

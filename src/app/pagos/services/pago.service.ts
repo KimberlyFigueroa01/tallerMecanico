@@ -12,8 +12,8 @@ export class PagoService {
   private readonly errorService = inject(ErrorService);
 
   private pagos: Pago[] = [
-    { id: 'P-100', ordenId: 'OT-1001', metodo: 'tarjeta', monto: 142.8, fecha: '2026-05-01' },
-    { id: 'P-101', ordenId: 'OT-1002', metodo: 'efectivo', monto: 238, fecha: '2026-05-02' }
+    { id: 'P-100', ordenId: 'OT-1001', metodo: 'tarjeta', monto: 142.8, referencia: 'TRX-001', fecha: '2026-05-01' },
+    { id: 'P-101', ordenId: 'OT-1002', metodo: 'efectivo', monto: 238, referencia: 'EF-021', fecha: '2026-05-02' }
   ];
 
   getAll(): Observable<Pago[]> {

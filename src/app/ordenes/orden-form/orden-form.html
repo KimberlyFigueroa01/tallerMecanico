@@ -1,31 +1,167 @@
-<section class="orden-form">
-	<header>
-		<h1>Nueva orden</h1>
-		<p>Completa los datos basicos para registrar la orden.</p>
+<section class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+	<header class="flex h-[56px] items-center justify-between bg-slate-900 px-4 text-white">
+		<div>
+			<p class="text-sm font-semibold">Nueva orden</p>
+			<p class="text-[11px] text-slate-300">Completa los datos basicos para registrar la orden.</p>
+		</div>
+		<span class="rounded-full border border-slate-700 px-2 py-1 text-[11px] text-slate-200">Formulario</span>
 	</header>
 
-	<form [formGroup]="form" (ngSubmit)="submit()">
-		<div class="form-grid">
-			<div class="field">
-				<label for="cliente">Cliente</label>
-				<input id="cliente" formControlName="cliente" placeholder="Nombre del cliente">
-			</div>
-			<div class="field">
-				<label for="vehiculo">Vehiculo</label>
-				<input id="vehiculo" formControlName="vehiculo" placeholder="Marca y modelo">
-			</div>
-			<div class="field">
-				<label for="tecnico">Tecnico</label>
-				<input id="tecnico" formControlName="tecnico" placeholder="Asignado">
-			</div>
-			<div class="field">
-				<label for="tipo">Tipo</label>
-				<input id="tipo" formControlName="tipo" placeholder="Mecanica, electrica, etc.">
-			</div>
-		</div>
+	<form [formGroup]="form" (ngSubmit)="submit()" class="flex min-h-[620px] flex-col lg:flex-row">
+		<main class="flex-1 space-y-6 border-r border-slate-200 bg-white p-6">
+			<section class="space-y-2">
+				<p class="text-[11px] uppercase tracking-widest text-slate-500">Datos principales</p>
+				<div class="grid gap-4 sm:grid-cols-2">
+					<div class="relative sm:col-span-2">
+						<label for="cliente" class="text-xs text-slate-500">Cliente</label>
+						<input
+							id="cliente"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="clienteSearch"
+							placeholder="Nombre, RUT o telefono"
+						>
+						@if (clienteResultados().length) {
+							<div class="absolute z-10 mt-2 w-full rounded-lg border border-slate-200 bg-white shadow">
+								@for (cliente of clienteResultados(); track cliente.id) {
+									<button
+										type="button"
+										class="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-slate-50"
+										(click)="selectCliente(cliente)"
+									>
+										<span>{{ cliente.nombre }}</span>
+										<span class="text-xs text-slate-400">{{ cliente.telefono }}</span>
+									</button>
+								}
+							</div>
+						}
+					</div>
+					<div>
+						<label for="vehiculo" class="text-xs text-slate-500">Vehiculo</label>
+						<select
+							id="vehiculo"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="vehiculoId"
+							(change)="selectVehiculo($any($event.target).value)"
+						>
+							<option value="">Selecciona vehiculo</option>
+							@for (vehiculo of vehiculos(); track vehiculo.id) {
+								<option [value]="vehiculo.id">
+									{{ vehiculo.marca }} {{ vehiculo.modelo }} - {{ vehiculo.placa }}
+								</option>
+							}
+						</select>
+					</div>
+					<div>
+						<label for="tipoServicio" class="text-xs text-slate-500">Tipo de servicio</label>
+						<select
+							id="tipoServicio"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="tipoServicio"
+						>
+							<option value="MANTENCION">Mantencion</option>
+							<option value="REPARACION">Reparacion</option>
+							<option value="GARANTIA">Garantia</option>
+						</select>
+					</div>
+					<div>
+						<label for="prioridad" class="text-xs text-slate-500">Prioridad</label>
+						<select
+							id="prioridad"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="prioridad"
+						>
+							<option value="ALTA">Alta</option>
+							<option value="MEDIA">Media</option>
+							<option value="BAJA">Baja</option>
+						</select>
+					</div>
+				</div>
+			</section>
 
-		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
-			{{ isSubmitting() ? 'Guardando...' : 'Guardar orden' }}
-		</button>
+			<section class="space-y-2">
+				<p class="text-[11px] uppercase tracking-widest text-slate-500">Fechas y condiciones</p>
+				<div class="grid gap-4 sm:grid-cols-2">
+					<div>
+						<label for="fechaIngreso" class="text-xs text-slate-500">Fecha de ingreso</label>
+						<input
+							id="fechaIngreso"
+							type="date"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="fechaIngreso"
+						>
+					</div>
+					<div>
+						<label for="fechaEntrega" class="text-xs text-slate-500">Fecha estimada</label>
+						<input
+							id="fechaEntrega"
+							type="date"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="fechaEntrega"
+						>
+					</div>
+					<div>
+						<label for="kilometraje" class="text-xs text-slate-500">Kilometraje</label>
+						<input
+							id="kilometraje"
+							type="number"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="kilometraje"
+						>
+					</div>
+					<div>
+						<label for="nivelCombustible" class="text-xs text-slate-500">Combustible %</label>
+						<input
+							id="nivelCombustible"
+							type="number"
+							class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+							formControlName="nivelCombustible"
+						>
+					</div>
+				</div>
+			</section>
+
+			<section class="space-y-2">
+				<p class="text-[11px] uppercase tracking-widest text-slate-500">Observaciones iniciales</p>
+				<textarea
+					class="min-h-[120px] w-full rounded-lg border border-slate-200 bg-white p-3 text-sm text-slate-700"
+					formControlName="observaciones"
+					placeholder="Describe sintomas o comentarios iniciales"
+				></textarea>
+			</section>
+		</main>
+
+		<aside class="w-full border-t border-slate-200 bg-slate-50 p-6 lg:w-[320px] lg:border-l lg:border-t-0">
+			<div class="space-y-4">
+				<div class="rounded-xl border border-slate-200 bg-white p-4">
+					<p class="text-[11px] uppercase tracking-widest text-slate-500">Resumen</p>
+					@if (selectedCliente()) {
+						<div class="mt-3 space-y-1 text-sm">
+							<p class="font-semibold text-slate-900">{{ selectedCliente()?.nombre }}</p>
+							<p class="text-xs text-slate-500">{{ selectedCliente()?.telefono }}</p>
+							<p class="text-xs text-slate-500">{{ selectedCliente()?.direccion }}, {{ selectedCliente()?.comuna }}</p>
+						</div>
+					} @else {
+						<p class="mt-3 text-xs text-slate-400">Selecciona un cliente para ver el resumen.</p>
+					}
+					@if (selectedVehiculo()) {
+						<div class="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
+							<p class="font-semibold text-slate-900">
+								{{ selectedVehiculo()?.marca }} {{ selectedVehiculo()?.modelo }}
+							</p>
+							<p>{{ selectedVehiculo()?.placa }} - {{ selectedVehiculo()?.ano }}</p>
+							<p>{{ selectedVehiculo()?.tipo }}</p>
+						</div>
+					}
+				</div>
+
+				<button
+					type="submit"
+					class="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm text-white"
+					[disabled]="isSubmitting()"
+				>
+					{{ isSubmitting() ? 'Guardando...' : 'Guardar orden' }}
+				</button>
+			</div>
+		</aside>
 	</form>
 </section>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { OrdenService } from '../services/orden.service';
 import { EstadoOrden, Orden } from '../models/orden.model';
@@ -6,7 +7,7 @@ import { StatusBadge } from '../../shared/shared/status-badge/status-badge';
 
 @Component({
   selector: 'app-ordenes-list',
-  imports: [StatusBadge],
+  imports: [RouterLink, StatusBadge],
   templateUrl: './ordenes-list.html',
   styleUrl: './ordenes-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,10 +24,10 @@ export class OrdenesList {
   readonly resumen = computed(() => {
     const data = this.orders();
     return {
-      abiertas: data.filter(item => item.estado === 'Abierta').length,
-      progreso: data.filter(item => item.estado === 'En progreso').length,
-      listas: data.filter(item => item.estado === 'Lista').length,
-      cerradas: data.filter(item => item.estado === 'Cerrada').length
+      abiertas: data.filter(item => item.estado === 'ABIERTA').length,
+      progreso: data.filter(item => item.estado === 'EN_PROGRESO').length,
+      listas: data.filter(item => item.estado === 'LISTA').length,
+      cerradas: data.filter(item => item.estado === 'CERRADA').length
     };
   });
 

@@ -1,17 +1,9 @@
-<section class="reporte">
-	<h1>Reporte de mecanicos</h1>
-	<div class="cards">
-		<div class="card">
-			<strong>Carlos Ruiz</strong>
-			<div class="progress">
-				<div class="bar" style="width: 70%"></div>
-			</div>
-		</div>
-		<div class="card">
-			<strong>Laura Perez</strong>
-			<div class="progress">
-				<div class="bar" style="width: 55%"></div>
-			</div>
-		</div>
+<section class="space-y-6">
+	<header>
+		<h1 class="text-lg font-semibold text-slate-900">Reporte de mecanicos</h1>
+		<p class="text-sm text-slate-500">Productividad por mecanico.</p>
+	</header>
+	<div class="rounded-xl border border-slate-200 bg-white p-4">
+		<app-horizontal-bar-chart [data]="data()"></app-horizontal-bar-chart>
 	</div>
 </section>

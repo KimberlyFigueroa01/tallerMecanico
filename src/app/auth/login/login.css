@@ -100,7 +100,8 @@ h2 {
 .login-logo {
   width: 120px;
   height: 120px;
-  margin-bottom: 1rem;
+  display: block;
+  margin: 0 auto 1rem;
   object-fit: contain;
 }
 

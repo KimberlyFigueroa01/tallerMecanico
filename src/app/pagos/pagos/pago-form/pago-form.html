@@ -1,25 +1,76 @@
-<section class="pago-form">
-	<header>
-		<h1>Registrar pago</h1>
-		<p>Selecciona metodo y confirma el monto.</p>
+<section class="rounded-2xl border border-slate-200 bg-white p-6">
+	<header class="mb-6">
+		<h1 class="text-lg font-semibold text-slate-900">Registrar pago</h1>
+		<p class="text-sm text-slate-500">Selecciona metodo y confirma el monto.</p>
 	</header>
 
-	<div class="metodos">
-		<button class="metodo" [class.active]="metodo() === 'efectivo'" (click)="setMetodo('efectivo')">Efectivo</button>
-		<button class="metodo" [class.active]="metodo() === 'tarjeta'" (click)="setMetodo('tarjeta')">Tarjeta</button>
-		<button class="metodo" [class.active]="metodo() === 'transferencia'" (click)="setMetodo('transferencia')">Transferencia</button>
+	<div class="grid gap-6 lg:grid-cols-[1fr_0.7fr]">
+		<div class="rounded-xl border border-slate-200 p-4">
+			<h2 class="text-sm font-semibold text-slate-900">Detalle de orden</h2>
+			@if (orden()) {
+				<div class="mt-4 space-y-2 text-sm text-slate-600">
+					<p><span class="text-slate-400">Orden</span> #{{ orden()?.numero }}</p>
+					<p><span class="text-slate-400">Cliente</span> {{ orden()?.cliente?.nombre }}</p>
+					<p><span class="text-slate-400">Vehiculo</span> {{ orden()?.vehiculo?.marca }} {{ orden()?.vehiculo?.modelo }}</p>
+				</div>
+				<div class="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+					<p class="text-slate-500">Total a pagar</p>
+					<p class="text-lg font-semibold text-slate-900">${{ orden()?.total | number: '1.0-0' }}</p>
+				</div>
+			} @else {
+				<p class="mt-4 text-sm text-slate-400">Cargando orden...</p>
+			}
+		</div>
+
+		<div class="space-y-4 rounded-xl border border-slate-200 p-4">
+			<h2 class="text-sm font-semibold text-slate-900">Metodo de pago</h2>
+			<div class="flex flex-wrap gap-2">
+				<button
+					type="button"
+					class="rounded-full border px-3 py-1 text-xs"
+					[class.border-slate-900]="metodo() === 'efectivo'"
+					[class.text-slate-900]="metodo() === 'efectivo'"
+					(click)="setMetodo('efectivo')"
+				>
+					Efectivo
+				</button>
+				<button
+					type="button"
+					class="rounded-full border px-3 py-1 text-xs"
+					[class.border-slate-900]="metodo() === 'tarjeta'"
+					[class.text-slate-900]="metodo() === 'tarjeta'"
+					(click)="setMetodo('tarjeta')"
+				>
+					Tarjeta
+				</button>
+				<button
+					type="button"
+					class="rounded-full border px-3 py-1 text-xs"
+					[class.border-slate-900]="metodo() === 'transferencia'"
+					[class.text-slate-900]="metodo() === 'transferencia'"
+					(click)="setMetodo('transferencia')"
+				>
+					Transferencia
+				</button>
+			</div>
+
+			<form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
+				<div>
+					<label for="monto" class="text-xs text-slate-500">Monto</label>
+					<input id="monto" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="monto">
+				</div>
+				<div>
+					<label for="referencia" class="text-xs text-slate-500">Referencia</label>
+					<input id="referencia" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="referencia">
+				</div>
+				<button
+					type="submit"
+					class="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm text-white"
+					[disabled]="isSubmitting()"
+				>
+					{{ isSubmitting() ? 'Guardando...' : 'Guardar pago' }}
+				</button>
+			</form>
+		</div>
 	</div>
-
-	<form [formGroup]="form" (ngSubmit)="submit()">
-		<div class="field">
-			<label for="monto">Monto</label>
-			<input id="monto" type="number" formControlName="monto">
-		</div>
-		<div class="field">
-			<label for="referencia">Referencia</label>
-			<input id="referencia" formControlName="referencia">
-		</div>
-
-		<button class="primary-btn" type="submit">Guardar pago</button>
-	</form>
 </section>

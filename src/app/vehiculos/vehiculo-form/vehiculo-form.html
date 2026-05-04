@@ -1,30 +1,70 @@
-<section class="vehiculo-form">
-	<header>
-		<h1>Vehiculo</h1>
-		<p>Datos basicos del vehiculo.</p>
+<section class="rounded-2xl border border-slate-200 bg-white p-6">
+	<header class="mb-6">
+		<h1 class="text-lg font-semibold text-slate-900">Vehiculo</h1>
+		<p class="text-sm text-slate-500">Datos basicos del vehiculo.</p>
 	</header>
 
-	<form [formGroup]="form" (ngSubmit)="submit()">
-		<div class="form-grid">
-			<div class="field">
-				<label for="marca">Marca</label>
-				<input id="marca" formControlName="marca">
-			</div>
-			<div class="field">
-				<label for="modelo">Modelo</label>
-				<input id="modelo" formControlName="modelo">
-			</div>
-			<div class="field">
-				<label for="ano">Ano</label>
-				<input id="ano" type="number" formControlName="ano">
-			</div>
-			<div class="field">
-				<label for="placa">Placa</label>
-				<input id="placa" formControlName="placa">
+	<form [formGroup]="form" (ngSubmit)="submit()" class="space-y-6">
+		<div class="rounded-xl border border-slate-200 p-4">
+			<h2 class="text-sm font-semibold text-slate-900">Datos del vehiculo</h2>
+			<div class="mt-4 grid gap-4 sm:grid-cols-2">
+				<div>
+					<label for="marca" class="text-xs text-slate-500">Marca</label>
+					<input id="marca" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="marca">
+				</div>
+				<div>
+					<label for="modelo" class="text-xs text-slate-500">Modelo</label>
+					<input id="modelo" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="modelo">
+				</div>
+				<div>
+					<label for="ano" class="text-xs text-slate-500">Ano</label>
+					<input id="ano" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="ano">
+				</div>
+				<div>
+					<label for="placa" class="text-xs text-slate-500">Placa</label>
+					<input id="placa" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="placa">
+				</div>
+				<div>
+					<label for="color" class="text-xs text-slate-500">Color</label>
+					<input id="color" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="color">
+				</div>
+				<div>
+					<label for="tipo" class="text-xs text-slate-500">Tipo</label>
+					<input id="tipo" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="tipo">
+				</div>
+				<div>
+					<label for="vin" class="text-xs text-slate-500">VIN</label>
+					<input id="vin" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="vin">
+				</div>
+				<div>
+					<label for="km" class="text-xs text-slate-500">Kilometraje</label>
+					<input id="km" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="km">
+				</div>
 			</div>
 		</div>
 
-		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+		<div class="rounded-xl border border-slate-200 p-4">
+			<h2 class="text-sm font-semibold text-slate-900">Cliente</h2>
+			<div class="mt-4">
+				<label for="clienteId" class="text-xs text-slate-500">Propietario</label>
+				<select
+					id="clienteId"
+					class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+					formControlName="clienteId"
+				>
+					<option value="">Selecciona cliente</option>
+					@for (cliente of clientes(); track cliente.id) {
+						<option [value]="cliente.id">{{ cliente.nombre }}</option>
+					}
+				</select>
+			</div>
+		</div>
+
+		<button
+			type="submit"
+			class="rounded-lg bg-slate-900 px-4 py-2 text-sm text-white"
+			[disabled]="isSubmitting()"
+		>
 			{{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
 		</button>
 	</form>

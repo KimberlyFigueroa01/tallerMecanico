@@ -19,9 +19,11 @@ export class VehiculoService {
       ano: 2018,
       color: 'Blanco',
       placa: 'ABCD-12',
+      tipo: 'Sedan',
       vin: '1HGBH41JXMN109186',
       km: 42000,
-      cliente: 'Ana Ramirez'
+      cliente: 'Ana Ramirez',
+      clienteId: 'C-1001'
     },
     {
       id: 'V-1002',
@@ -30,9 +32,11 @@ export class VehiculoService {
       ano: 2019,
       color: 'Gris',
       placa: 'EFGH-34',
+      tipo: 'Hatchback',
       vin: '2HGBH41JXMN109999',
       km: 30000,
-      cliente: 'Jorge Molina'
+      cliente: 'Jorge Molina',
+      clienteId: 'C-1002'
     }
   ];
 
@@ -48,5 +52,9 @@ export class VehiculoService {
 
   getById(id: string): Observable<Vehiculo | null> {
     return of(this.vehiculos.find(item => item.id === id) ?? null).pipe(delay(300));
+  }
+
+  getByCliente(clienteId: string): Observable<Vehiculo[]> {
+    return of(this.vehiculos.filter(item => item.clienteId === clienteId)).pipe(delay(200));
   }
 }

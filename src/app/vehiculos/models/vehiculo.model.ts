@@ -5,7 +5,9 @@ export interface Vehiculo {
   ano: number;
   color: string;
   placa: string;
+  tipo: string;
   vin: string;
   km: number;
   cliente: string;
+  clienteId: string;
 }

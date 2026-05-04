@@ -12,9 +12,45 @@ export class InventarioService {
   private readonly errorService = inject(ErrorService);
 
   private repuestos: Repuesto[] = [
-    { id: 'R-100', nombre: 'Filtro de aceite', sku: 'FO-001', categoria: 'Motor', stock: 8, minimo: 5, precio: 12 },
-    { id: 'R-200', nombre: 'Pastillas de freno', sku: 'PF-002', categoria: 'Frenos', stock: 2, minimo: 5, precio: 45 },
-    { id: 'R-300', nombre: 'Bujias', sku: 'BU-003', categoria: 'Motor', stock: 10, minimo: 4, precio: 8 }
+    {
+      id: 100,
+      nombre: 'Filtro de aceite',
+      sku: 'FO-001',
+      categoria: 'Motor',
+      proveedor: 'Lubricantes Andes',
+      ubicacion: 'A-01',
+      stock: 8,
+      stockMin: 5,
+      stockMax: 30,
+      precioCompra: 6,
+      precioVenta: 12
+    },
+    {
+      id: 200,
+      nombre: 'Pastillas de freno',
+      sku: 'PF-002',
+      categoria: 'Frenos',
+      proveedor: 'Frenos Pro',
+      ubicacion: 'B-04',
+      stock: 2,
+      stockMin: 5,
+      stockMax: 20,
+      precioCompra: 25,
+      precioVenta: 45
+    },
+    {
+      id: 300,
+      nombre: 'Bujias',
+      sku: 'BU-003',
+      categoria: 'Motor',
+      proveedor: 'AutoPartes Norte',
+      ubicacion: 'A-03',
+      stock: 10,
+      stockMin: 4,
+      stockMax: 25,
+      precioCompra: 4,
+      precioVenta: 8
+    }
   ];
 
   getRepuestos(): Observable<Repuesto[]> {
@@ -28,6 +64,20 @@ export class InventarioService {
   }
 
   getAlertas(): Observable<Repuesto[]> {
-    return of(this.repuestos.filter(item => item.stock < item.minimo)).pipe(delay(200));
+    return of(this.repuestos.filter(item => item.stock < item.stockMin)).pipe(delay(200));
+  }
+
+  decrementStock(id: number, cantidad: number): void {
+    this.repuestos = this.repuestos.map(item =>
+      item.id === id ? { ...item, stock: Math.max(0, item.stock - cantidad) } : item
+    );
+  }
+
+  incrementStock(id: number, cantidad: number): void {
+    this.repuestos = this.repuestos.map(item =>
+      item.id === id
+        ? { ...item, stock: Math.min(item.stockMax, item.stock + cantidad) }
+        : item
+    );
   }
 }

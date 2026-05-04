@@ -4,7 +4,7 @@
 			<h1>Ordenes</h1>
 			<p>Resumen operativo del taller</p>
 		</div>
-		<button class="primary-btn">Nueva orden</button>
+		<button class="primary-btn" [routerLink]="['/ordenes/nueva']">Nueva orden</button>
 	</header>
 
 	<div class="resumen">
@@ -29,14 +29,14 @@
 	<div class="filters">
 		<select (change)="updateEstado($any($event.target).value)">
 			<option value="">Estado</option>
-			<option value="Abierta">Abierta</option>
-			<option value="En progreso">En progreso</option>
-			<option value="Lista">Lista</option>
-			<option value="Cerrada">Cerrada</option>
+			<option value="ABIERTA">Abierta</option>
+			<option value="EN_PROGRESO">En progreso</option>
+			<option value="LISTA">Lista</option>
+			<option value="CERRADA">Cerrada</option>
 		</select>
 		<select (change)="updateTecnico($any($event.target).value)">
 			<option value="">Tecnico</option>
-			<option value="Carlos Ruiz">Carlos Ruiz</option>
+			<option value="Carlos Mendez">Carlos Mendez</option>
 			<option value="Laura Perez">Laura Perez</option>
 		</select>
 		<input
@@ -67,15 +67,15 @@
 			<tbody>
 				@for (order of orders(); track order.id) {
 					<tr>
-						<td>{{ order.id }}</td>
+						<td>{{ order.numero }}</td>
 						<td>
 							<div class="stacked">
-								<span class="primary">{{ order.cliente }}</span>
-								<span class="secondary">{{ order.vehiculo }}</span>
+								<span class="primary">{{ order.cliente.nombre }}</span>
+								<span class="secondary">{{ order.vehiculo.marca }} {{ order.vehiculo.modelo }}</span>
 							</div>
 						</td>
-						<td>{{ order.tecnico }}</td>
-						<td>{{ order.tipo }}</td>
+						<td>{{ order.tecnicoAsignado?.nombre ?? '-' }}</td>
+						<td>{{ order.tipoServicio }}</td>
 						<td><app-status-badge [status]="order.estado"></app-status-badge></td>
 						<td>${{ order.total }}</td>
 					</tr>

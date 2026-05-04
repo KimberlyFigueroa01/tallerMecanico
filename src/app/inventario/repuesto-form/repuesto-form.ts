@@ -15,8 +15,13 @@ export class RepuestoForm {
     nombre: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     sku: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     categoria: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    proveedor: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    ubicacion: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     stock: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-    precio: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
+    stockMin: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+    stockMax: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+    precioCompra: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+    precioVenta: new FormControl(0, { nonNullable: true, validators: [Validators.required] })
   });
 
   submit(): void {

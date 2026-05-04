@@ -1,40 +1,81 @@
-<section class="factura">
-	<header class="factura-header">
-		<div>
-			<h1>{{ taller }}</h1>
-			<p>Factura de servicios</p>
+<section class="rounded-2xl border border-slate-200 bg-white p-6">
+	<header class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
+		<div class="flex items-center gap-3">
+			<img
+				[ngSrc]="theme.logo"
+				width="44"
+				height="44"
+				alt="Logo"
+				class="rounded-lg"
+			>
+			<div>
+				<h1 class="text-lg font-semibold text-slate-900">{{ taller }}</h1>
+				<p class="text-sm text-slate-500">Factura de servicios</p>
+			</div>
 		</div>
-		<button class="primary-btn" (click)="print()">Imprimir</button>
+		<button class="rounded-lg bg-slate-900 px-4 py-2 text-xs text-white" (click)="print()">Imprimir</button>
 	</header>
 
-	<div class="factura-body">
-		<div class="factura-section">
-			<h3>Cliente</h3>
-			<p>Nombre del cliente</p>
+	<div class="space-y-6 pt-6">
+		<div class="grid gap-6 md:grid-cols-2">
+			<div class="rounded-xl border border-slate-200 p-4">
+				<p class="text-xs uppercase tracking-widest text-slate-400">Cliente</p>
+				@if (orden()) {
+					<p class="mt-2 text-sm font-semibold text-slate-900">{{ orden()?.cliente?.nombre }}</p>
+					<p class="text-xs text-slate-500">{{ orden()?.cliente?.telefono }}</p>
+				} @else {
+					<p class="mt-2 text-sm text-slate-400">Cargando datos...</p>
+				}
+			</div>
+			<div class="rounded-xl border border-slate-200 p-4">
+				<p class="text-xs uppercase tracking-widest text-slate-400">Detalle</p>
+				@if (orden()) {
+					<p class="mt-2 text-sm text-slate-600">Orden #{{ orden()?.numero }}</p>
+					<p class="text-xs text-slate-500">Fecha: {{ orden()?.fechaCreacion | date: 'dd/MM/yyyy' }}</p>
+					<p class="text-xs text-slate-500">Estado: {{ orden()?.estado }}</p>
+				} @else {
+					<p class="mt-2 text-sm text-slate-400">Cargando datos...</p>
+				}
+			</div>
 		</div>
-		<div class="factura-section">
-			<h3>Detalle</h3>
-			<table>
-				<thead>
-					<tr>
-						<th>Servicio</th>
-						<th>Cant</th>
-						<th>Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Servicio ejemplo</td>
-						<td>1</td>
-						<td>$120</td>
-					</tr>
-				</tbody>
-			</table>
+
+		<div class="rounded-xl border border-slate-200 p-4">
+			<h3 class="text-sm font-semibold text-slate-900">Detalle de servicios</h3>
+			<div class="mt-4 overflow-x-auto">
+				<table class="min-w-full text-left text-sm">
+					<thead class="text-[11px] uppercase tracking-widest text-slate-400">
+						<tr>
+							<th class="py-2">Servicio</th>
+							<th class="py-2">Cant</th>
+							<th class="py-2">Precio</th>
+							<th class="py-2">Desc %</th>
+							<th class="py-2">Total</th>
+						</tr>
+					</thead>
+					<tbody class="text-slate-700">
+						@for (linea of orden()?.lineas ?? []; track linea.id) {
+							<tr class="border-t border-slate-100">
+								<td class="py-2">
+									<p class="font-medium text-slate-900">{{ linea.descripcion }}</p>
+								</td>
+								<td class="py-2">{{ linea.cantidad }}</td>
+								<td class="py-2">${{ linea.precioUnitario }}</td>
+								<td class="py-2">{{ linea.descuentoPct }}%</td>
+								<td class="py-2 font-semibold text-slate-900">
+									${{ linea.total | number: '1.0-0' }}
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class="factura-totals">
-			<span>Subtotal: $120</span>
-			<span>IVA: $22.8</span>
-			<strong>Total: $142.8</strong>
+
+		<div class="flex flex-wrap justify-end gap-6 text-sm text-slate-600">
+			<span>Subtotal: ${{ totals().subtotal | number: '1.0-0' }}</span>
+			<span>Descuento: ${{ totals().descuento | number: '1.0-0' }}</span>
+			<span>IVA: ${{ totals().iva | number: '1.0-0' }}</span>
+			<strong class="text-slate-900">Total: ${{ totals().total | number: '1.0-0' }}</strong>
 		</div>
 	</div>
 </section>

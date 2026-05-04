@@ -1,85 +1,377 @@
 @if (order()) {
-	<section class="orden-detail">
-		<header class="orden-header">
-			<div class="orden-title">
-				<h1>{{ order()?.id }}</h1>
-				<span>{{ order()?.fecha }}</span>
+	<section class="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+		<header class="flex h-[52px] items-center justify-between bg-slate-900 px-4 text-white">
+			<div class="flex items-center gap-4">
+				<a class="text-xs text-slate-200 hover:text-white" [routerLink]="['/ordenes']">&#x2039; Volver</a>
+				<div>
+					<p class="text-sm font-semibold">Orden #{{ order()?.numero }}</p>
+					<p class="text-[11px] text-slate-300">{{ order()?.fechaCreacion | date: 'dd MMM yyyy' }}</p>
+				</div>
+				<div class="flex items-center gap-2">
+					<span class="rounded-full bg-slate-800 px-2 py-1 text-[11px]">{{ order()?.fechaLimite | date: 'dd MMM' }}</span>
+					<span class="rounded-full border border-slate-700 px-2 py-1 text-[11px] text-slate-200">{{ elapsed() }}</span>
+				</div>
 			</div>
-			<div class="orden-actions">
-				<app-status-badge [status]="order()?.estado ?? ''"></app-status-badge>
-				<button class="header-btn">Editar</button>
+			<div class="flex items-center gap-2">
+				<select
+					class="h-8 rounded-lg border border-slate-700 bg-slate-800 px-2 text-xs text-white"
+					(change)="updateTecnico($any($event.target).value)"
+					[value]="order()?.tecnicoAsignado?.nombre"
+				>
+					<option value="">Asignar tecnico</option>
+					@for (tecnico of tecnicos; track tecnico.id) {
+						<option [value]="tecnico.nombre">{{ tecnico.nombre }}</option>
+					}
+				</select>
+				<button class="rounded-lg border border-slate-700 px-2 py-1 text-xs" (click)="print()">Imprimir</button>
+				<button class="rounded-lg border border-slate-700 px-2 py-1 text-xs">Compartir</button>
+				<button class="rounded-lg border border-slate-700 px-2 py-1 text-xs">Notas</button>
+				<select
+					class="h-8 rounded-full border border-slate-700 bg-slate-800 px-3 text-xs text-white"
+					(change)="updateEstado($any($event.target).value)"
+					[value]="order()?.estado"
+				>
+					<option value="ABIERTA">Abierta</option>
+					<option value="EN_PROGRESO">En progreso</option>
+					<option value="LISTA">Lista</option>
+					<option value="CERRADA">Cerrada</option>
+				</select>
+				@if (showIngresarPago()) {
+					<button class="rounded-lg bg-emerald-500 px-3 py-1 text-xs text-white" (click)="openPago()">
+						Ingresar pago
+					</button>
+				}
 			</div>
 		</header>
 
-		<div class="orden-body">
-			<div class="panel-left">
-				<div class="panel-section">
-					<h3>Cliente</h3>
-					<p>{{ order()?.cliente }}</p>
-				</div>
-				<div class="panel-section">
-					<h3>Tipo de falla</h3>
-					<div class="chip-group">
-						<button class="chip">Mecanica</button>
-						<button class="chip">Electrica</button>
-						<button class="chip">Carroceria</button>
+		<div class="flex min-h-[600px] overflow-hidden">
+			<main class="flex-1 overflow-y-auto border-r border-slate-200 bg-white p-6">
+				<section class="space-y-4">
+					<div class="flex items-center justify-between">
+						<div class="flex items-center gap-3">
+							<div class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm text-white">
+								{{ order()?.cliente?.nombre?.slice(0, 1) ?? 'C' }}
+								{{ order()?.cliente?.nombre?.split(' ')?.[1]?.slice(0, 1) ?? '' }}
+							</div>
+							<div>
+								<p class="text-sm font-semibold text-slate-900">{{ order()?.cliente?.nombre }}</p>
+								<p class="text-xs text-slate-500">{{ order()?.cliente?.telefono }}</p>
+							</div>
+						</div>
+						<button class="rounded-lg border border-slate-200 px-3 py-1 text-xs">WhatsApp</button>
 					</div>
-				</div>
-				<div class="panel-section">
-					<h3>Descripcion</h3>
-					<p class="muted">Pendiente de diagnostico detallado.</p>
-				</div>
-				<div class="panel-section">
-					<h3>Servicios</h3>
-					<table class="lineas">
-						<thead>
-							<tr>
-								<th>Cant</th>
-								<th>Precio</th>
-								<th>Desc</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							@for (linea of order()?.lineas ?? []; track linea.id) {
-								<tr>
-									<td>{{ linea.cantidad }}</td>
-									<td>${{ linea.precio }}</td>
-									<td>${{ linea.descuento }}</td>
-									<td>${{ linea.total }}</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-					<button class="ghost-btn">+ Agregar producto</button>
-				</div>
-			</div>
 
-			<aside class="panel-right">
-				<div class="tabs">
+					<div class="space-y-2">
+						<p class="text-[11px] uppercase tracking-widest text-slate-500">Falla o requerimiento</p>
+						<div class="flex flex-wrap gap-4 text-xs text-slate-600">
+							<label class="flex items-center gap-2">
+								<input
+									type="radio"
+									name="tipoServicio"
+									[value]="'REPARACION'"
+									[checked]="order()?.tipoServicio === 'REPARACION'"
+									(change)="setTipoServicio('REPARACION')"
+								>
+								Reparacion
+							</label>
+							<label class="flex items-center gap-2">
+								<input
+									type="radio"
+									name="tipoServicio"
+									[value]="'MANTENCION'"
+									[checked]="order()?.tipoServicio === 'MANTENCION'"
+									(change)="setTipoServicio('MANTENCION')"
+								>
+								Mantencion
+							</label>
+							<label class="flex items-center gap-2">
+								<input
+									type="radio"
+									name="tipoServicio"
+									[value]="'GARANTIA'"
+									[checked]="order()?.tipoServicio === 'GARANTIA'"
+									(change)="setTipoServicio('GARANTIA')"
+								>
+								Garantia
+							</label>
+						</div>
+					</div>
+
+					<div class="space-y-2">
+						<div class="flex items-center justify-between">
+							<p class="text-[11px] uppercase tracking-widest text-slate-500">Descripcion</p>
+							<span class="text-[11px] text-slate-400">
+								{{ isSavingDescripcion() ? 'Guardando...' : 'Auto-guardado' }}
+							</span>
+						</div>
+						<textarea
+							class="min-h-[90px] w-full rounded-lg border border-slate-200 bg-white p-3 text-sm text-slate-700"
+							[value]="descripcionDraft()"
+							(input)="updateDescripcion($any($event.target).value)"
+						></textarea>
+					</div>
+
+					<div class="space-y-3">
+						<table class="min-w-full text-left text-sm">
+							<thead class="text-[11px] uppercase tracking-widest text-slate-400">
+								<tr>
+									<th class="py-2">Servicio o producto</th>
+									<th class="py-2">Cant</th>
+									<th class="py-2">Precio</th>
+									<th class="py-2">Desc %</th>
+									<th class="py-2">Total</th>
+									<th class="py-2">Acciones</th>
+								</tr>
+							</thead>
+							<tbody class="text-slate-700">
+								@for (linea of order()?.lineas ?? []; track linea.id) {
+									<tr class="border-t border-slate-100">
+										<td class="py-2">
+											@if (lineEditId() === linea.id) {
+												<input
+													class="w-full rounded-lg border border-slate-200 px-2 py-1 text-xs"
+													[value]="lineDraft()?.descripcion"
+													(input)="updateLineDraft('descripcion', $any($event.target).value)"
+												>
+											} @else {
+												<p class="font-medium text-slate-900">{{ linea.descripcion }}</p>
+											}
+										</td>
+										<td class="py-2">
+											@if (lineEditId() === linea.id) {
+												<input
+													type="number"
+													class="w-16 rounded-lg border border-slate-200 px-2 py-1 text-xs"
+													[value]="lineDraft()?.cantidad"
+													(input)="updateLineDraft('cantidad', $any($event.target).valueAsNumber || 0)"
+												>
+											} @else {
+												{{ linea.cantidad }}
+											}
+										</td>
+										<td class="py-2">
+											@if (lineEditId() === linea.id) {
+												<input
+													type="number"
+													class="w-20 rounded-lg border border-slate-200 px-2 py-1 text-xs"
+													[value]="lineDraft()?.precioUnitario"
+													(input)="updateLineDraft('precioUnitario', $any($event.target).valueAsNumber || 0)"
+												>
+											} @else {
+												${{ linea.precioUnitario }}
+											}
+										</td>
+										<td class="py-2">
+											@if (lineEditId() === linea.id) {
+												<input
+													type="number"
+													class="w-16 rounded-lg border border-slate-200 px-2 py-1 text-xs"
+													[value]="lineDraft()?.descuentoPct"
+													(input)="updateLineDraft('descuentoPct', $any($event.target).valueAsNumber || 0)"
+												>
+											} @else {
+												@if (linea.descuentoPct > 0) {
+													<span class="rounded-full bg-blue-100 px-2 py-1 text-[11px] text-blue-600">
+														{{ linea.descuentoPct }}%
+													</span>
+												} @else {
+													0%
+												}
+											}
+										</td>
+										<td class="py-2 font-semibold text-slate-900">
+											@if (lineEditId() === linea.id && lineDraft()) {
+												${{ calcularTotalLinea(lineDraft()!) | number: '1.0-0' }}
+											} @else {
+												${{ calcularTotalLinea(linea) | number: '1.0-0' }}
+											}
+										</td>
+										<td class="py-2">
+											@if (lineEditId() === linea.id) {
+												<div class="flex items-center gap-2">
+													<button class="rounded-full bg-emerald-500 px-2 py-1 text-[11px] text-white" (click)="saveLineEdit()">&#10003;</button>
+													<button class="rounded-full bg-slate-100 px-2 py-1 text-[11px]" (click)="cancelLineEdit()">&#10005;</button>
+												</div>
+											} @else {
+												<div class="flex items-center gap-2">
+													<button class="rounded-full border border-slate-200 px-2 py-1 text-[11px]" (click)="startLineEdit(linea)">...</button>
+													<button class="rounded-full bg-emerald-500 px-2 py-1 text-[11px] text-white" (click)="startLineEdit(linea)">&#10003;</button>
+													<button class="rounded-full bg-rose-500 px-2 py-1 text-[11px] text-white" (click)="removeLinea(linea)">-</button>
+												</div>
+											}
+										</td>
+									</tr>
+								}
+								<tr>
+									<td colspan="6" class="py-3 text-sm text-blue-600">
+										<button class="flex items-center gap-2" (click)="addLinea()">
+											<span>+ Agregar nuevo producto o servicio</span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div>
+						<p class="text-[11px] uppercase tracking-widest text-slate-500">Linea de tiempo</p>
+						<app-orden-timeline [items]="timelineItems()"></app-orden-timeline>
+					</div>
+				</section>
+			</main>
+
+			<aside class="w-[340px] shrink-0 overflow-y-auto bg-white p-4">
+				<div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3 text-xs">
 					@for (tab of tabs; track tab) {
-						<button class="tab" [class.active]="activeTab() === tab" (click)="setTab(tab)">
+						<button
+							class="rounded-full border border-slate-200 px-3 py-1"
+							[class.border-slate-900]="activeTab() === tab"
+							[class.text-slate-900]="activeTab() === tab"
+							(click)="setTab(tab)"
+						>
 							{{ tab }}
 						</button>
 					}
 				</div>
-				<div class="tab-content">
-					<h4>{{ activeTab() }}</h4>
-					<p class="muted">Informacion contextual de {{ activeTab() }}.</p>
+
+				<div class="pt-4">
+					@switch (activeTab()) {
+						@case ('Vehiculo') {
+							<div class="space-y-4">
+								<div class="flex items-center justify-between">
+									<div>
+										<p class="text-sm font-semibold text-slate-900">{{ order()?.vehiculo?.marca }} {{ order()?.vehiculo?.modelo }}</p>
+										<p class="text-xs text-slate-500">{{ order()?.vehiculo?.placa }} - {{ order()?.vehiculo?.ano }} - {{ order()?.vehiculo?.color }}</p>
+									</div>
+									<button
+										class="rounded-lg border border-slate-200 px-3 py-1 text-xs"
+										[routerLink]="['/vehiculos', order()?.vehiculo?.id, 'editar']"
+									>
+										Editar
+									</button>
+								</div>
+
+								<div>
+									<label class="text-xs text-slate-500">Kilometraje actual</label>
+									<input
+										class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
+										type="number"
+										[value]="order()?.kilometraje"
+										(input)="updateKilometraje($any($event.target).valueAsNumber || 0)"
+									>
+								</div>
+
+								<div>
+									<label class="text-xs text-slate-500">Nivel de combustible</label>
+									<div class="mt-2 h-2 w-full rounded-full bg-slate-100">
+										<div class="h-2 rounded-full bg-emerald-500" [style.width.%]="order()?.nivelCombustible ?? 0"></div>
+									</div>
+									<input
+										class="mt-2 w-full"
+										type="range"
+										min="0"
+										max="100"
+										[value]="order()?.nivelCombustible ?? 0"
+										(input)="updateNivelCombustible($any($event.target).valueAsNumber || 0)"
+									>
+								</div>
+
+								<div>
+									<button class="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs">
+										Inspeccion de ingreso a taller
+									</button>
+								</div>
+
+								<div>
+									<label class="text-xs text-slate-500">Estado general del vehiculo</label>
+									<textarea
+										class="mt-1 min-h-[80px] w-full rounded-lg border border-slate-200 p-2 text-sm"
+										[value]="order()?.estadoVehiculo"
+										(input)="updateEstadoVehiculo($any($event.target).value)"
+									></textarea>
+								</div>
+
+								<div>
+									<p class="text-xs text-slate-500">Inventario del vehiculo</p>
+									<div class="mt-2 grid grid-cols-3 gap-2 text-[11px] text-slate-600">
+										@for (item of inventarioItems(); track item.label) {
+											<label class="flex items-center gap-2">
+												<input
+													type="checkbox"
+													[checked]="item.value"
+													(change)="toggleInventario(item.label, $any($event.target).checked)"
+												>
+												{{ item.label }}
+											</label>
+										}
+									</div>
+								</div>
+							</div>
+						}
+						@case ('Notas') {
+							<div class="space-y-3">
+								@for (nota of order()?.notas ?? []; track nota.id) {
+									<div class="rounded-lg border border-slate-200 bg-white p-3">
+										<p class="text-xs text-slate-500">{{ nota.autor }} - {{ nota.fecha | date: 'dd/MM/yyyy' }}</p>
+										<p class="text-sm text-slate-700">{{ nota.texto }}</p>
+									</div>
+								}
+								<textarea
+									class="min-h-[80px] w-full rounded-lg border border-slate-200 bg-white p-2 text-sm"
+									[value]="notaDraft()"
+									(input)="notaDraft.set($any($event.target).value)"
+								></textarea>
+								<button class="rounded-lg bg-slate-900 px-3 py-1 text-xs text-white" (click)="addNota()">
+									Enviar nota
+								</button>
+							</div>
+						}
+						@case ('Informe') {
+							<div class="space-y-2">
+								<textarea
+									class="min-h-[120px] w-full rounded-lg border border-slate-200 bg-white p-2 text-sm"
+									[value]="diagnosticoDraft()"
+									(input)="updateDiagnostico($any($event.target).value)"
+								></textarea>
+								<button class="rounded-lg bg-slate-900 px-3 py-1 text-xs text-white">Guardar informe</button>
+							</div>
+						}
+						@case ('Tareas') {
+							<app-orden-trabajo [tareas]="order()?.tareas ?? []" (toggle)="toggleTarea($event)"></app-orden-trabajo>
+						}
+						@case ('Pago') {
+							<div class="space-y-3">
+								<p class="text-sm font-semibold text-slate-900">Resumen de pago</p>
+								<div class="rounded-lg border border-slate-200 bg-white p-3 text-sm">
+									Total: ${{ totals().total | number: '1.0-0' }}
+								</div>
+								<button class="rounded-lg bg-slate-900 px-3 py-1 text-xs text-white" (click)="openPago()">Confirmar pago</button>
+								<button class="rounded-lg border border-slate-200 px-3 py-1 text-xs" [routerLink]="['/pagos', order()?.id, 'factura']">Imprimir factura</button>
+							</div>
+						}
+						@case ('Info') {
+							<div class="space-y-2 text-sm text-slate-600">
+								<p>Creacion: {{ order()?.fechaCreacion | date: 'dd/MM/yyyy' }}</p>
+								<p>Ultima modificacion: {{ order()?.fechaLimite | date: 'dd/MM/yyyy' }}</p>
+								<p>Estado: {{ order()?.estado }}</p>
+								<p>Tecnico: {{ order()?.tecnicoAsignado?.nombre ?? 'Sin asignar' }}</p>
+							</div>
+						}
+					}
 				</div>
 			</aside>
 		</div>
 
-		<footer class="totals-bar">
-			<div class="totals">
-				<span>Descuento: ${{ order()?.descuento }}</span>
-				<span>Subtotal: ${{ order()?.subtotal }}</span>
-				<span>IVA: ${{ order()?.iva }}</span>
-				<strong>Total: ${{ totalLabel() }}</strong>
+		<footer class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-white px-6 py-4 text-sm">
+			<div class="flex flex-wrap items-center gap-3 text-slate-600">
+				<span class="rounded-full bg-rose-100 px-3 py-1 text-rose-600">Descuento: ${{ totals().descuento | number: '1.0-0' }}</span>
+				<span class="rounded-full bg-slate-100 px-3 py-1">Subtotal: ${{ totals().subtotal | number: '1.0-0' }}</span>
+				<span class="rounded-full bg-slate-100 px-3 py-1">IVA: ${{ totals().iva | number: '1.0-0' }}</span>
+				<span class="rounded-full bg-blue-600 px-3 py-1 text-white">Total: ${{ totals().total | number: '1.0-0' }}</span>
 			</div>
-			<button class="primary-btn">Imprimir orden</button>
+			<button class="rounded-lg bg-slate-900 px-4 py-2 text-xs text-white" (click)="print()">Imprimir orden</button>
 		</footer>
 	</section>
 } @else {
-	<div class="loading">Cargando orden...</div>
+	<div class="p-6 text-sm text-slate-500">Cargando orden...</div>
 }

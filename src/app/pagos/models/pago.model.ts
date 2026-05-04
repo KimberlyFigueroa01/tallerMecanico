@@ -3,5 +3,6 @@ export interface Pago {
   ordenId: string;
   metodo: 'efectivo' | 'tarjeta' | 'transferencia';
   monto: number;
+  referencia: string;
   fecha: string;
 }

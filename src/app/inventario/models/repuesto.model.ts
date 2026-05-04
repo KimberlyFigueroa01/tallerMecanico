@@ -1,9 +1,13 @@
 export interface Repuesto {
-  id: string;
+  id: number;
   nombre: string;
   sku: string;
   categoria: string;
+  proveedor: string;
+  ubicacion: string;
   stock: number;
-  minimo: number;
-  precio: number;
+  stockMin: number;
+  stockMax: number;
+  precioCompra: number;
+  precioVenta: number;
 }

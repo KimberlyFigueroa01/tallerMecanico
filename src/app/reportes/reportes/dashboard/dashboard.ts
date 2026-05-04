@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
 import { ReportesService, DashboardData } from '../../services/reportes.service';
+import { BarChart, DonutChart } from '../../../shared';
+import { StatusBadge } from '../../../shared/shared/status-badge/status-badge';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [BarChart, DonutChart, StatusBadge],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
   changeDetection: ChangeDetectionStrategy.OnPush

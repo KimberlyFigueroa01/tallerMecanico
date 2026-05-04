@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { VehiculoService } from '../services/vehiculo.service';
 import { Vehiculo } from '../models/vehiculo.model';
 
 @Component({
   selector: 'app-vehiculos-list',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './vehiculos-list.html',
   styleUrl: './vehiculos-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush

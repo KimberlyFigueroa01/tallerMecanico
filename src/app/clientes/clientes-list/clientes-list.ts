@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { ClienteService } from '../services/cliente.service';
 import { Cliente } from '../models/cliente.model';
@@ -7,7 +7,7 @@ import { StatusBadge } from '../../shared/shared/status-badge/status-badge';
 
 @Component({
   selector: 'app-clientes-list',
-  imports: [StatusBadge],
+  imports: [RouterLink, StatusBadge],
   templateUrl: './clientes-list.html',
   styleUrl: './clientes-list.css',
   changeDetection: ChangeDetectionStrategy.OnPush

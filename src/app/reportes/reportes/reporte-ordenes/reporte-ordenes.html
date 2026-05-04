@@ -1,4 +1,9 @@
-<section class="reporte">
-	<h1>Reporte de ordenes</h1>
-	<div class="chart-placeholder">Grafica por estado</div>
+<section class="space-y-6">
+	<header>
+		<h1 class="text-lg font-semibold text-slate-900">Reporte de ordenes</h1>
+		<p class="text-sm text-slate-500">Distribucion por estado.</p>
+	</header>
+	<div class="rounded-xl border border-slate-200 bg-white p-4">
+		<app-donut-chart [data]="data()"></app-donut-chart>
+	</div>
 </section>

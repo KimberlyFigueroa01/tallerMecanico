@@ -15,7 +15,10 @@ export class ClienteForm {
     nombre: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     telefono: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    rut: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+    rut: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    direccion: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    comuna: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    ciudad: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
 
   submit(): void {

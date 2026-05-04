@@ -18,6 +18,9 @@ export class ClienteService {
       email: 'ana@example.com',
       telefono: '+56 9 1234 5678',
       rut: '12.345.678-9',
+      direccion: 'Av. Los Aromos 120',
+      comuna: 'Providencia',
+      ciudad: 'Santiago',
       vehiculos: 2,
       ultimaVisita: '2026-04-20',
       estadoOrden: 'Abierta'
@@ -28,6 +31,9 @@ export class ClienteService {
       email: 'jorge@example.com',
       telefono: '+56 9 8765 4321',
       rut: '9.876.543-2',
+      direccion: 'Calle San Martin 450',
+      comuna: 'Nunoa',
+      ciudad: 'Santiago',
       vehiculos: 1,
       ultimaVisita: '2026-03-28',
       estadoOrden: 'Cerrada'

@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { InventarioService } from '../services/inventario.service';
 import { Repuesto } from '../models/repuesto.model';
 
 @Component({
   selector: 'app-alertas-stock',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './alertas-stock.html',
   styleUrl: './alertas-stock.css',
   changeDetection: ChangeDetectionStrategy.OnPush

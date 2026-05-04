@@ -1,4 +1,9 @@
-<section class="reporte">
-	<h1>Reporte de inventario</h1>
-	<div class="chart-placeholder">Stock por categoria</div>
+<section class="space-y-6">
+	<header>
+		<h1 class="text-lg font-semibold text-slate-900">Reporte de inventario</h1>
+		<p class="text-sm text-slate-500">Stock por categoria.</p>
+	</header>
+	<div class="rounded-xl border border-slate-200 bg-white p-4">
+		<app-bar-chart [data]="data()"></app-bar-chart>
+	</div>
 </section>

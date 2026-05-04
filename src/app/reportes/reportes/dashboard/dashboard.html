@@ -26,11 +26,11 @@
 	<div class="charts">
 		<div class="chart-card">
 			<h3>Ingresos por mes</h3>
-			<div class="chart-placeholder">Grafica de barras</div>
+			<app-bar-chart [data]="data()?.ingresosPorMes ?? []"></app-bar-chart>
 		</div>
 		<div class="chart-card">
 			<h3>Ordenes por estado</h3>
-			<div class="chart-placeholder">Grafica dona</div>
+			<app-donut-chart [data]="data()?.ordenesPorEstado ?? []"></app-donut-chart>
 		</div>
 	</div>
 
@@ -45,11 +45,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>OT-1001</td>
-					<td>Maria Lopez</td>
-					<td>Abierta</td>
-				</tr>
+				@for (orden of data()?.ordenesRecientes ?? []; track orden.numero) {
+					<tr>
+						<td>{{ orden.numero }}</td>
+						<td>{{ orden.cliente }}</td>
+						<td><app-status-badge [status]="orden.estado"></app-status-badge></td>
+					</tr>
+				}
 			</tbody>
 		</table>
 	</div>

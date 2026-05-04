@@ -4,7 +4,7 @@
 			<h1>Inventario</h1>
 			<p>Control de repuestos y stock.</p>
 		</div>
-		<button class="primary-btn">Nuevo repuesto</button>
+		<button class="primary-btn" [routerLink]="['/inventario/repuesto/nuevo']">Nuevo repuesto</button>
 	</header>
 
 	<app-alertas-stock></app-alertas-stock>
@@ -18,8 +18,10 @@
 					<th>Repuesto</th>
 					<th>SKU</th>
 					<th>Categoria</th>
+					<th>Proveedor</th>
 					<th>Stock</th>
-					<th>Precio</th>
+					<th>Minimo</th>
+					<th>Precio venta</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,6 +30,7 @@
 						<td>{{ repuesto.nombre }}</td>
 						<td>{{ repuesto.sku }}</td>
 						<td>{{ repuesto.categoria }}</td>
+						<td>{{ repuesto.proveedor }}</td>
 						<td>
 							<span
 								class="stock-pill"
@@ -38,7 +41,8 @@
 								{{ repuesto.stock }}
 							</span>
 						</td>
-						<td>${{ repuesto.precio }}</td>
+						<td>{{ repuesto.stockMin }}</td>
+						<td>${{ repuesto.precioVenta }}</td>
 					</tr>
 				}
 			</tbody>

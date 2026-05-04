@@ -1,34 +1,67 @@
-<section class="repuesto-form">
-	<header>
-		<h1>Repuesto</h1>
-		<p>Registra un nuevo repuesto.</p>
+<section class="rounded-2xl border border-slate-200 bg-white p-6">
+	<header class="mb-6">
+		<h1 class="text-lg font-semibold text-slate-900">Repuesto</h1>
+		<p class="text-sm text-slate-500">Registra un nuevo repuesto.</p>
 	</header>
 
-	<form [formGroup]="form" (ngSubmit)="submit()">
-		<div class="form-grid">
-			<div class="field">
-				<label for="nombre">Nombre</label>
-				<input id="nombre" formControlName="nombre">
-			</div>
-			<div class="field">
-				<label for="sku">SKU</label>
-				<input id="sku" formControlName="sku">
-			</div>
-			<div class="field">
-				<label for="categoria">Categoria</label>
-				<input id="categoria" formControlName="categoria">
-			</div>
-			<div class="field">
-				<label for="stock">Stock</label>
-				<input id="stock" type="number" formControlName="stock">
-			</div>
-			<div class="field">
-				<label for="precio">Precio</label>
-				<input id="precio" type="number" formControlName="precio">
+	<form [formGroup]="form" (ngSubmit)="submit()" class="space-y-6">
+		<div class="rounded-xl border border-slate-200 p-4">
+			<h2 class="text-sm font-semibold text-slate-900">Datos basicos</h2>
+			<div class="mt-4 grid gap-4 sm:grid-cols-2">
+				<div>
+					<label for="nombre" class="text-xs text-slate-500">Nombre</label>
+					<input id="nombre" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="nombre">
+				</div>
+				<div>
+					<label for="sku" class="text-xs text-slate-500">SKU</label>
+					<input id="sku" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="sku">
+				</div>
+				<div>
+					<label for="categoria" class="text-xs text-slate-500">Categoria</label>
+					<input id="categoria" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="categoria">
+				</div>
+				<div>
+					<label for="proveedor" class="text-xs text-slate-500">Proveedor</label>
+					<input id="proveedor" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="proveedor">
+				</div>
+				<div>
+					<label for="ubicacion" class="text-xs text-slate-500">Ubicacion</label>
+					<input id="ubicacion" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="ubicacion">
+				</div>
 			</div>
 		</div>
 
-		<button class="primary-btn" type="submit" [disabled]="isSubmitting()">
+		<div class="rounded-xl border border-slate-200 p-4">
+			<h2 class="text-sm font-semibold text-slate-900">Stock y precios</h2>
+			<div class="mt-4 grid gap-4 sm:grid-cols-2">
+				<div>
+					<label for="stock" class="text-xs text-slate-500">Stock actual</label>
+					<input id="stock" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="stock">
+				</div>
+				<div>
+					<label for="stockMin" class="text-xs text-slate-500">Stock minimo</label>
+					<input id="stockMin" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="stockMin">
+				</div>
+				<div>
+					<label for="stockMax" class="text-xs text-slate-500">Stock maximo</label>
+					<input id="stockMax" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="stockMax">
+				</div>
+				<div>
+					<label for="precioCompra" class="text-xs text-slate-500">Precio compra</label>
+					<input id="precioCompra" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="precioCompra">
+				</div>
+				<div>
+					<label for="precioVenta" class="text-xs text-slate-500">Precio venta</label>
+					<input id="precioVenta" type="number" class="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" formControlName="precioVenta">
+				</div>
+			</div>
+		</div>
+
+		<button
+			type="submit"
+			class="rounded-lg bg-slate-900 px-4 py-2 text-sm text-white"
+			[disabled]="isSubmitting()"
+		>
 			{{ isSubmitting() ? 'Guardando...' : 'Guardar' }}
 		</button>
 	</form>

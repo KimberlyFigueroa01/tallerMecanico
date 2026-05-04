@@ -4,8 +4,8 @@
 		<ul>
 			@for (item of alertas(); track item.id) {
 				<li>
-					<span>{{ item.nombre }} ({{ item.stock }})</span>
-					<button>Reordenar</button>
+					<span>{{ item.nombre }} ({{ item.stock }}/{{ item.stockMin }})</span>
+					<button [routerLink]="['/inventario/repuesto', item.id]">Reordenar</button>
 				</li>
 			}
 		</ul>

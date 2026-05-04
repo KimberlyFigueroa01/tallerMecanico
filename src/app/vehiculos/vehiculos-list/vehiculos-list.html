@@ -4,7 +4,7 @@
 			<h1>Vehiculos</h1>
 			<p>Listado de vehiculos registrados.</p>
 		</div>
-		<button class="primary-btn">Nuevo vehiculo</button>
+		<button class="primary-btn" [routerLink]="['/vehiculos/nuevo']">Nuevo vehiculo</button>
 	</header>
 
 	@if (isLoading()) {
