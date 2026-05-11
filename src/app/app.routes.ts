@@ -7,7 +7,7 @@ import { MainLayout } from './shared/shared/main-layout/main-layout';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
@@ -66,6 +66,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: 'auth'
   }
 ];
