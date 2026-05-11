@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { AutenticacionService } from '../login/autenticacion.service';
-import { ConfiguracionService } from '../../services/configuracion.service';
+import { ConfiguracionService } from '../../shared/services/configuracion.service';
 
 @Component({
   selector: 'app-forgot-password',

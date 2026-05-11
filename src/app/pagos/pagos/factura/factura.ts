@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { OrdenService } from '../../../ordenes/services/orden.service';
-import { ConfiguracionService } from '../../services/configuracion.service';
+import { ConfiguracionService } from '../../../shared/services/configuracion.service';
 import { Orden } from '../../../ordenes/models/orden.model';
 
 @Component({
