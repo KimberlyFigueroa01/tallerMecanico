@@ -15,8 +15,30 @@ export class ConfiguracionService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly documentRef = inject(DOCUMENT);
 
-  /** Reactive signal for the tenant logo URL — consumed by navbar, login, etc. */
-  readonly logoUrl = signal<string>('assets/logos/logoTallerAndres.png');
+  /** Temas predefinidos para cada cliente */
+  private readonly TEMAS: Record<string, TenantConfig> = {
+    andres: {
+      primaryColor: '#1B5E20',
+      secondaryColor: '#FFFFFF',
+      background: '#e8f5e9',
+      logo: 'assets/logos/logoTallerAndres.png'
+    },
+    edwin: {
+      primaryColor: '#D50000',
+      secondaryColor: '#FFFFFF',
+      background: '#fff5f5',
+      logo: 'assets/logos/logoTallerEdwin.png'
+    }
+  };
+
+  /** Reactive signal for the tenant logo URL */
+  readonly logoUrl = signal<string>(this.TEMAS['andres'].logo);
+
+  /** Aplica un tema por nombre (andres o edwin) */
+  aplicarPorNombre(nombre: string): void {
+    const tema = this.TEMAS[nombre.toLowerCase()] || this.TEMAS['andres'];
+    this.aplicarTema(tema);
+  }
 
   /**
    * Applies a tenant theme at runtime by setting CSS custom properties on :root.
