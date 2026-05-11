@@ -34,9 +34,25 @@ export class ConfiguracionService {
   /** Reactive signal for the tenant logo URL */
   readonly logoUrl = signal<string>(this.TEMAS['andres'].logo);
 
-  /** Aplica un tema por nombre (andres o edwin) */
+  /** Recupera el taller guardado o el de la URL */
+  init(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
+    const guardado = localStorage.getItem('app_taller');
+    if (guardado) {
+      this.aplicarPorNombre(guardado);
+    }
+  }
+
+  /** Aplica un tema por nombre (andres o edwin) y lo persiste */
   aplicarPorNombre(nombre: string): void {
-    const tema = this.TEMAS[nombre.toLowerCase()] || this.TEMAS['andres'];
+    const taller = nombre.toLowerCase();
+    const tema = this.TEMAS[taller] || this.TEMAS['andres'];
+    
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('app_taller', taller);
+    }
+    
     this.aplicarTema(tema);
   }
 

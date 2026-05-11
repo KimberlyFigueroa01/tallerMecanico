@@ -17,13 +17,19 @@ export class App implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    // Escuchamos cambios en la URL (parámetros de consulta)
+    // 1. Cargamos lo que esté guardado en memoria
+    this.configService.init();
+
+    // 2. Escuchamos cambios en la URL para sobreescribir (si existe el parámetro)
     this.route.queryParams.subscribe(params => {
       const taller = params['taller'];
       if (taller) {
         this.configService.aplicarPorNombre(taller);
       } else {
-        this.themeService.init();
+        // Si no hay parámetro Y no hay nada guardado, aplicamos el default del env
+        if (!localStorage.getItem('app_taller')) {
+          this.themeService.init();
+        }
       }
     });
   }
