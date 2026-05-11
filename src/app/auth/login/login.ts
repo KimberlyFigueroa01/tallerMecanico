@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { AutenticacionService } from './autenticacion.service';
+import { ConfiguracionService } from '../../services/configuracion.service';
 
 @Component({
   selector: 'app-login',

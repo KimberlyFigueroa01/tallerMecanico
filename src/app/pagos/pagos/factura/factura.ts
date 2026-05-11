@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { OrdenService } from '../../../ordenes/services/orden.service';
+import { ConfiguracionService } from '../../services/configuracion.service';
 import { Orden } from '../../../ordenes/models/orden.model';
 
 @Component({
@@ -16,9 +17,11 @@ import { Orden } from '../../../ordenes/models/orden.model';
 export class Factura {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
+  private readonly ordenService = inject(OrdenService);
   private readonly configService = inject(ConfiguracionService);
-  readonly logoUrl = this.configService.logoUrl;
 
+  readonly taller = environment.name;
+  readonly logoUrl = this.configService.logoUrl;
   readonly orden = signal<Orden | null>(null);
 
   readonly totals = computed(() => {
@@ -46,7 +49,7 @@ export class Factura {
       return;
     }
     const ordenId = Number(idParam);
-    this.ordenService.getById(ordenId).subscribe(orden => this.orden.set(orden));
+    this.ordenService.getById(ordenId).subscribe((orden: Orden) => this.orden.set(orden));
   }
 
   print(): void {

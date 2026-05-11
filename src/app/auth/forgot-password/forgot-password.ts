@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { AutenticacionService } from '../login/autenticacion.service';
+import { ConfiguracionService } from '../../services/configuracion.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,7 +15,10 @@ import { AutenticacionService } from '../login/autenticacion.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotPassword {
+  private readonly authService = inject(AutenticacionService);
+  private readonly router = inject(Router);
   private readonly configService = inject(ConfiguracionService);
+
   readonly logoUrl = this.configService.logoUrl;
 
   readonly formSubmitted = signal(false);
