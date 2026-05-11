@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+	--color-primary: var(--app-primary, #1B5E20);
+	--color-bg-custom: var(--app-bg, #e8f5e9);
+}
+
 /* Global styles and theme variables */
 
 :root {

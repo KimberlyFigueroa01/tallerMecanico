@@ -1,7 +1,7 @@
 export const environment = {
-  production: false,
+  production: true,
   name: 'tallerMecanico',
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://api-taller-mecanico.onrender.com',
   theme: {
     primaryColor: '#1B5E20',
     secondaryColor: '#FFFFFF',
