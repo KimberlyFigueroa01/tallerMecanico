@@ -16,10 +16,9 @@ import { Orden } from '../../../ordenes/models/orden.model';
 export class Factura {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly route = inject(ActivatedRoute);
-  private readonly ordenService = inject(OrdenService);
+  private readonly configService = inject(ConfiguracionService);
+  readonly logoUrl = this.configService.logoUrl;
 
-  readonly taller = environment.name;
-  readonly theme = environment.theme;
   readonly orden = signal<Orden | null>(null);
 
   readonly totals = computed(() => {

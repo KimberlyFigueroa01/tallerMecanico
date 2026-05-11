@@ -14,10 +14,9 @@ import { AutenticacionService } from '../login/autenticacion.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotPassword {
-  private readonly authService = inject(AutenticacionService);
-  private readonly router = inject(Router);
+  private readonly configService = inject(ConfiguracionService);
+  readonly logoUrl = this.configService.logoUrl;
 
-  readonly theme = environment.theme;
   readonly formSubmitted = signal(false);
   readonly isSubmitting = signal(false);
   readonly successMessage = signal<string | null>(null);

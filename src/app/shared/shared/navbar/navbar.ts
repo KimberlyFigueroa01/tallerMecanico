@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 import { environment } from '../../../../environments/environment';
+import { ConfiguracionService } from '../../services/configuracion.service';
 import { NotificacionBadge } from '../notificaciones/notificacion-badge/notificacion-badge';
 
 @Component({
@@ -12,6 +13,8 @@ import { NotificacionBadge } from '../notificaciones/notificacion-badge/notifica
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Navbar {
-  readonly theme = environment.theme;
+  private readonly configService = inject(ConfiguracionService);
+  
+  readonly logoUrl = this.configService.logoUrl;
   readonly name = environment.name;
 }

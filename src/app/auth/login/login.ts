@@ -19,7 +19,9 @@ export class Login {
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
 
-  readonly theme = environment.theme;
+  private readonly configService = inject(ConfiguracionService);
+  readonly logoUrl = this.configService.logoUrl;
+
   readonly formSubmitted = signal(false);
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal<string | null>(null);
