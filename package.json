@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node dist/tallerMecanico/server/server.mjs",
-    "build": "ng build",
+    "build": "node --max-old-space-size=450 ./node_modules/@angular/cli/bin/ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:tallerMecanico": "node dist/tallerMecanico/server/server.mjs"
